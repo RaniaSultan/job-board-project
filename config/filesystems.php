@@ -56,6 +56,14 @@ return [
             'throw' => false,
         ],
 
+        'applicantions_resumes' => [
+            'driver' => 'local',
+            'root' => public_path('applications/resumes'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
     ],
 
     /*
