@@ -8,6 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+// to use many-many relationship
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Post;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -43,4 +47,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function posts(): BelongsToMany
+    {
+        return $this->belongsToMany(Post::class, 'applications', 'user_id', 'post_id')->withPivot('resume', 'status')->withTimestamps();
+    }
+
+    public function isEmployer(): bool
+    {
+        return $this->type === 'employer';
+    }
 }

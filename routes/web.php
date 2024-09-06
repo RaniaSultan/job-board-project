@@ -22,3 +22,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('applications', (ApplicationController::class));
+
+// applications acceptence and rejection routes 
+Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
+Route::post('/applications/{application}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
