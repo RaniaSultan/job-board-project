@@ -77,7 +77,7 @@
         </nav>
 
         <main class="py-4">
-        @if (session('error'))
+            @if (session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
             </div>
@@ -86,8 +86,8 @@
 
 
 
-       
- </main>
+
+        </main>
     </div>
 </body>
 

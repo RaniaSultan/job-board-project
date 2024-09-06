@@ -15,11 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('post_id');
             $table->string('resume')->nullable();
-<<<<<<< HEAD
-            $table->enum('status', ['waiting', 'accepted', 'rejected'])->default('waiting');
-=======
             $table->enum('status', ['waiting', 'accepted', 'rejected', 'cancelled'])->default('waiting');
->>>>>>> 4b30443458334107d4d71a2d16e32d5c4fb8c079
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade');
             $table->primary(['user_id', 'post_id']);
