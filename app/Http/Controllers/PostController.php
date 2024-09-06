@@ -32,37 +32,37 @@ class PostController extends Controller
     $status = $request->query('status');
 
     //all posts
-    // if ($status === 'approved') {
-    //     $posts = Post::where('status', 'approved')->orderBy('created_at', 'desc')->get();
-    // } elseif ($status === 'pending') {
-    //     $posts = Post::where('status', 'pending')->orderBy('created_at', 'desc')->get();
-    // } elseif ($status === 'rejected') {
-    //     $posts = Post::where('status', 'rejected')->orderBy('created_at', 'desc')->get();
-    // } else {
-    //     return redirect()->route('posts.index', ['status' => 'approved']);
-    // }
+    if ($status === 'approved') {
+        $posts = Post::where('status', 'approved')->orderBy('created_at', 'desc')->get();
+    } elseif ($status === 'pending') {
+        $posts = Post::where('status', 'pending')->orderBy('created_at', 'desc')->get();
+    } elseif ($status === 'rejected') {
+        $posts = Post::where('status', 'rejected')->orderBy('created_at', 'desc')->get();
+    } else {
+        return redirect()->route('posts.index', ['status' => 'approved']);
+    }
 
 
      //my posts
 
-    if ($status === 'approved') {
-        $posts = Post::where('user_id', Auth::id())
-                    ->where('status', 'approved')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-    } elseif ($status === 'pending') {
-        $posts = Post::where('user_id', Auth::id())
-                    ->where('status', 'pending')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-    } elseif ($status === 'rejected') {
-        $posts = Post::where('user_id', Auth::id())
-                    ->where('status', 'rejected')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-    } else {
-        return redirect()->route('posts.index', ['status' => 'approved']);
-    }
+    // if ($status === 'approved') {
+    //     $posts = Post::where('user_id', Auth::id())
+    //                 ->where('status', 'approved')
+    //                 ->orderBy('created_at', 'desc')
+    //                 ->get();
+    // } elseif ($status === 'pending') {
+    //     $posts = Post::where('user_id', Auth::id())
+    //                 ->where('status', 'pending')
+    //                 ->orderBy('created_at', 'desc')
+    //                 ->get();
+    // } elseif ($status === 'rejected') {
+    //     $posts = Post::where('user_id', Auth::id())
+    //                 ->where('status', 'rejected')
+    //                 ->orderBy('created_at', 'desc')
+    //                 ->get();
+    // } else {
+    //     return redirect()->route('posts.index', ['status' => 'approved']);
+    // }
     return view('posts.index', ['posts' => $posts, 'status' => $status]);
 
     }
