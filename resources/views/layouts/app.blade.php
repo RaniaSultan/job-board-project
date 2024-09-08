@@ -82,6 +82,7 @@
 
         <main class="py-4">
             @yield('main')
+            @yield('sub-main')
             @yield('content')
         </main>
     </div>

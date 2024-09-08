@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->type === 'employer';
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('post_id');
+    }
 }
