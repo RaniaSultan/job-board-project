@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +25,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Route::resource("posts", PostController::class);
 Route::middleware(['auth', 'role:employer,admin'])->group(function () {
     Route::resource('posts', PostController::class);
-});
+});Route::resource('applications', (ApplicationController::class));
+
+// applications acceptence and rejection routes
+Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
+Route::post('/applications/{application}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
