@@ -21,4 +21,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource("posts", PostController::class);
+// Route::resource("posts", PostController::class);
+Route::middleware(['auth', 'role:employer,admin'])->group(function () {
+    Route::resource('posts', PostController::class);
+});

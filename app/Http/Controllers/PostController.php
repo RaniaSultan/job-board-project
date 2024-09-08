@@ -10,24 +10,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
+    public function __construct()
+    {
+        $this->middleware('auth');
 
-    // }
+    }
 
 
     public function index(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect('/login')->with('error', 'Access denied. You do not have permission to view this page');
-        }
-        $user = Auth::user();
-        if (!in_array($user->type, ['employer', 'admin'])) {
-            //return redirect('/')->with('error', 'Access denied.');
-            abort(403, 'Access denied. You do not have permission to view this page.');
+        // if (!Auth::check()) {
+        //     return redirect('/login')->with('error', 'Access denied. You do not have permission to view this page');
+        // }
+        // $user = Auth::user();
+        // if (!in_array($user->type, ['employer', 'admin'])) {
+        //  //   return redirect('/')->with('error', 'Access denied.');
+        //     abort(403, 'Access denied. You do not have permission to view this page.');
 
-        }
+        // }
 
     $status = $request->query('status');
 
@@ -63,6 +63,7 @@ class PostController extends Controller
     // } else {
     //     return redirect()->route('posts.index', ['status' => 'approved']);
     // }
+    
     return view('posts.index', ['posts' => $posts, 'status' => $status]);
 
     }
@@ -71,9 +72,9 @@ class PostController extends Controller
 
     public function create()
     {
-        if (!Auth::check()) {
-            return redirect('/login')->with('error', 'Please log in to create posts.');
-        }
+        // if (!Auth::check()) {
+        //     return redirect('/login')->with('error', 'Please log in to create posts.');
+        // }
         $user = Auth::user();
         if ($user->type !== 'employer') {
             abort(403, 'Access denied. Only employers can create posts.');
@@ -102,24 +103,24 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        if (!Auth::check()) {
-            return redirect('/login')->with('error', 'Please log in to view posts.');
-        }
-        $user = Auth::user();
-        if (!in_array($user->type, ['employer', 'admin'])) {
-            //return redirect('/')->with('error', 'Access denied.');
-            abort(403, 'Access denied. You do not have permission to view this page.');
+        // if (!Auth::check()) {
+        //     return redirect('/login')->with('error', 'Please log in to view posts.');
+        // }
+        // $user = Auth::user();
+        // if (!in_array($user->type, ['employer', 'admin'])) {
+        //     //return redirect('/')->with('error', 'Access denied.');
+        //     abort(403, 'Access denied. You do not have permission to view this page.');
 
-        }
+        // }
      return view('posts.show', compact('post'));
     }
 
 
     public function edit(Post $post)
     {
-        if (!Auth::check()) {
-            return redirect('/login')->with('error', 'Please log in to edit posts.');
-        }
+        // if (!Auth::check()) {
+        //     return redirect('/login')->with('error', 'Please log in to edit posts.');
+        // }
         $user = Auth::user();
         if ($user->type !== 'employer') {
             abort(403, 'Access denied. Only employers can edit posts.');
