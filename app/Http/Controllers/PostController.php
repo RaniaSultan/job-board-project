@@ -157,4 +157,15 @@ class PostController extends Controller
 
        return redirect()->route('posts.index')->with('success', 'Post deleted successfully');
     }
+
+    public function search(Request $request)
+    {
+        // dd($request);
+        // $posts = Post::where("category","like","%". $request->category ."%")->paginate(10);
+        $posts = Post::where('category', 'like', '%' . $request->search . '%')->paginate(10);
+        // $posts = Post::where('category', $request->search )->paginate(10);
+
+        // dd($posts);
+        return view("posts.search", compact("posts"));
+    }
 }
