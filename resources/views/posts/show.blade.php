@@ -89,7 +89,7 @@ use Carbon\Carbon;
         </div>
         @if($post['status'] == 'approved')
         <div class="card-footer d-flex justify-content-start">
-            <a class="btn btn-primary me-2" href="{{ route('applications.index', $post['id']) }}">Applications</a>
+            <a class="btn btn-primary me-2" href="{{ route('applications.indexEmployerApp', $post['id']) }}">Applications</a>
             <a class="btn btn-primary me-2" href="Doaa">Comments</a>
             <a class="btn btn-primary me-2" href="{{ route('posts.edit', $post['id']) }}">Edit</a>
 

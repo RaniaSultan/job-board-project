@@ -27,8 +27,8 @@ Route::middleware(['auth', 'role:employer,admin'])->group(function () {
     Route::resource('posts', PostController::class);
 });
 
-// Route::resource('applications', (ApplicationController::class));
-Route::get('/applications/{post_id?}', [ApplicationController::class, 'index'])->name('applications.index');
+Route::resource('applications', (ApplicationController::class));
+Route::get('/applications/{post_id?}', [ApplicationController::class, 'indexEmployerApp'])->name('applications.indexEmployerApp');
 
 // applications acceptence and rejection routes
 Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
