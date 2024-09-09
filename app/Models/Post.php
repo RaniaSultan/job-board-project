@@ -4,16 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-// to use many-many relationship
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Models\User;
-
 class Post extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'title',
+        'description',
+        'deadline',
+        'workType',
+        'location',
+        'skills',
+        'salaryRange',
+        'benefites',
+        'logo',
+        'category',
+        'user_id'
+    ];
 
-    public function users(): BelongsToMany
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+          public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'applications', 'post_id', 'user_id')->withPivot('resume', 'status')->withTimestamps();
     }
@@ -23,4 +37,3 @@ class Post extends Model
         return $this->morphMany(Comment::class, 'commentable')->whereNull('post_id');
     }
 }
-

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->text('description')->nullable(); 
             $table->timestamp('deadline')->nullable(); 
+
             $table->enum('workType', ['remote', 'onsite', 'hybrid'])->nullable();
             $table->string('location')->nullable();
             $table->string('skills')->nullable();
@@ -37,4 +38,8 @@ return new class extends Migration
     {
         Schema::dropIfExists('posts');
     }
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 3151e007923ede765900281740325eaaac05da95
