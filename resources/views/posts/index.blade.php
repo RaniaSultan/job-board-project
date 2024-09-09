@@ -1,10 +1,55 @@
 @extends('layouts.app')
+<<<<<<< HEAD
+=======
+
+@section('style')
+<style>
+.card {
+    position: relative;
+}
+
+.card-img-top {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.card-body {
+    margin-top: 10px;
+}
+</style>
+@endsection
+>>>>>>> e3dc891c90e254ed6ab7d047266172b81d874d3f
 
 @php
 use Carbon\Carbon;
 @endphp
 
-@section('content')
+@section('navbar')
+<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <li class="nav-item active">
+        <a class="nav-link" href="#raina">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/posts/create">Create Post</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'approved']) }}">Approved Posts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'pending']) }}">Posts pending</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'rejected']) }}">Rejected Posts </a>
+    </li>
+</ul>
+@endsection
+
+@section('main')
+
 @if (session('success'))
 <div class="alert alert-success" id="flash-message">
     {{ session('success') }}
