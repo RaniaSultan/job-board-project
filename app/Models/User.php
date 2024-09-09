@@ -54,12 +54,13 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    //user apply post relation
-    
-    // public function posts(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(Post::class, 'applications', 'user_id', 'post_id')->withPivot('resume', 'status')->withTimestamps();
-    // }
+    //user apply post relation    
+    public function appliedPosts(): BelongsToMany
+    {
+        return $this->belongsToMany(Post::class, 'applications', 'user_id', 'post_id')
+            ->withPivot('resume', 'status')
+            ->withTimestamps();
+    }
 
     public function isEmployer(): bool
     {
@@ -70,5 +71,4 @@ class User extends Authenticatable
     {
         return $this->morphMany(Comment::class, 'commentable')->whereNull('post_id');
     }
-
 }

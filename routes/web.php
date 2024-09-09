@@ -25,7 +25,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Route::resource("posts", PostController::class);
 Route::middleware(['auth', 'role:employer,admin'])->group(function () {
     Route::resource('posts', PostController::class);
-});Route::resource('applications', (ApplicationController::class));
+});
+
+// Route::resource('applications', (ApplicationController::class));
+Route::get('/applications/{post_id?}', [ApplicationController::class, 'index'])->name('applications.index');
 
 // applications acceptence and rejection routes
 Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
