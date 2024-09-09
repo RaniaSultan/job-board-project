@@ -33,7 +33,7 @@ class Post extends Model
     }
 
     //user apply post relation
-    public function users(): BelongsToMany
+    public function applicants(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'applications', 'post_id', 'user_id')->withPivot('resume', 'status')->withTimestamps();
     }
