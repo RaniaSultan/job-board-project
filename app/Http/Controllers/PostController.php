@@ -15,6 +15,9 @@ class PostController extends Controller
     //     $this->middleware('auth');
 
     // }
+// app/Http/Controllers/PostController.php
+
+
 
 
     public function index(Request $request)
@@ -111,7 +114,10 @@ class PostController extends Controller
             abort(403, 'Access denied. You do not have permission to view this page.');
 
         }
-     return view('posts.show', compact('post'));
+
+            $post = Post::with('comments')->findOrFail($id); // Fetch post with related comments
+            return view('posts.show', compact('post'));
+    //  return view('posts.show', compact('post'));
     }
 
 

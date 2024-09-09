@@ -75,6 +75,26 @@ use Carbon\Carbon;
         </div>
     </div>
 
+    <div class="card mt-4 bg-primary">
+        <div class="card-body">
+            <h5 class="card-title">Comments</h5>
+            @if($post->comments->isEmpty())
+                <p>No comments yet. Be the first to comment!</p>
+            @else
+                @foreach($post->comments as $comment)
+                    <div class="mb-3">
+                        <h6>{{ $comment->user->name }}</h6> <!-- Assuming each comment has a user relationship -->
+                        <p>{{ $comment->body }}</p>
+                        <small class="text-muted">{{ Carbon::parse($comment->created_at)->format('d M Y, h:i A') }}</small>
+                    </div>
+                    <hr>
+                @endforeach
+            @endif
+        </div>
+    </div>
+</div>
+
+
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
