@@ -1,8 +1,9 @@
-<!-- resources/views/jobboard/home.blade.php -->
+<!-- resources/views/posts/home.blade.php -->
 <!-- @php
     use Carbon\Carbon;
 @endphp -->
-@extends('layouts.app')
+
+
 @section('content')
 <div class="container">
     @if ($posts->count() > 0)
