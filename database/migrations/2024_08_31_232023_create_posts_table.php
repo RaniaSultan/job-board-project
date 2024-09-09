@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->text('description')->nullable();
-            $table->timestamp('deadline')->nullable();
+            $table->text('description')->nullable(); 
+            $table->timestamp('deadline')->nullable(); 
+
             $table->enum('workType', ['remote', 'onsite', 'hybrid'])->nullable();
             $table->string('location')->nullable();
             $table->string('skills')->nullable();

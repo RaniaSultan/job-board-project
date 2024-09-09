@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->enum('type', ['admin', 'employer', 'candidate']);
+
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

@@ -1,5 +1,8 @@
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 3151e007923ede765900281740325eaaac05da95
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -10,7 +13,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+<<<<<<< HEAD
+    <!-- <title>{{ config('app.name', 'Laravel') }}</title> -->
+    <title>@yield('title')</title>
+=======
     <title>{{ config('app.name', 'Laravel') }}</title>
+>>>>>>> 3151e007923ede765900281740325eaaac05da95
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -21,6 +29,15 @@
 </head>
 
 <body>
+<<<<<<< HEAD
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+
+=======
  @if(Auth::check() && Auth::user()->type == 'employer')
 
 
@@ -116,6 +133,7 @@
                 <a class="navbar-brand" href="/home">
                     Xcompany
                 </a>
+>>>>>>> 3151e007923ede765900281740325eaaac05da95
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -125,6 +143,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+<<<<<<< HEAD
+                        @yield('navbar')
+=======
                     <li class="nav-item">
             <a class="nav-link" href="/home">Home</a>
            
@@ -134,12 +155,52 @@
         </li>
 
        
+>>>>>>> 3151e007923ede765900281740325eaaac05da95
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
+<<<<<<< HEAD
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
+
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
+                                    <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile Image" class="img-thumbnail mb-3" width="50">
+                                </a>
+                                </a>
+
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('profile') }}">
+                                        {{ __('Profile') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                                                         document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+=======
                         @if (Route::has('login'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -178,11 +239,20 @@
                                 </form>
                             </div>
                         </li>
+>>>>>>> 3151e007923ede765900281740325eaaac05da95
                         @endguest
                     </ul>
                 </div>
             </div>
         </nav>
+<<<<<<< HEAD
+
+        <main class="py-4">
+            @yield('main')
+            @yield('sub-main')
+            @yield('content')
+        </main>
+=======
 @elseif (Auth::check() && in_array(Auth::user()->type, ['admin']))
 <div  class=" "id="app">
 
@@ -340,6 +410,7 @@
 
         </main>
        
+>>>>>>> 3151e007923ede765900281740325eaaac05da95
     </div>
 </body>
 
