@@ -38,8 +38,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('posts');
     }
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 3151e007923ede765900281740325eaaac05da95

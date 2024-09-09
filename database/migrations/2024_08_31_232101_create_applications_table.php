@@ -20,11 +20,8 @@ return new class extends Migration
             $table->enum('status', ['waiting', 'accepted', 'rejected', 'cancelled'])->default('waiting');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade');
-<<<<<<< HEAD
+
             // $table->primary(['user_id', 'post_id']);
-=======
-            $table->primary(['user_id', 'post_id']);
->>>>>>> 3151e007923ede765900281740325eaaac05da95
             $table->timestamps();
         });
     }
@@ -36,8 +33,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('applications');
     }
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 3151e007923ede765900281740325eaaac05da95

@@ -23,8 +23,4 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 3151e007923ede765900281740325eaaac05da95
