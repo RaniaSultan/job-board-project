@@ -14,7 +14,7 @@
 @endif
 <div class="container mt-5">
   <h1>Filter Posts</h1>
-  <form method="GET" action="" class="mb-4">
+  <form method="GET" action="{{route('posts.filter')}}" class="mb-4">
     <div class="form-row">
     <div class="col-md-3 mb-3">
     <label for="search">Category</label>

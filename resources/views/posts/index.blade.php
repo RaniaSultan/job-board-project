@@ -10,6 +10,12 @@ use Carbon\Carbon;
     {{ session('success') }}
 </div>
 @endif
+
+@if (session('error'))
+<div class="alert alert-success" id="flash-message">
+    {{ session('error') }}
+</div>
+@endif
 @if ($posts->count() > 0)
 @foreach($posts as $post)
 <div class="container mt-5">

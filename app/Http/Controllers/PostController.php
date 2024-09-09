@@ -162,10 +162,58 @@ class PostController extends Controller
     {
         // dd($request);
         // $posts = Post::where("category","like","%". $request->category ."%")->paginate(10);
+        
         $posts = Post::where('category', 'like', '%' . $request->search . '%')->paginate(10);
-        // $posts = Post::where('category', $request->search )->paginate(10);
+        if(count($posts) > 0)
+        {
+            return view("posts.search", compact("posts"));
+        }
+        else
+        {
+            return to_route("home")->with('error', 'No Result Found');
+        }
+    }
 
-        // dd($posts);
-        return view("posts.search", compact("posts"));
+    //filter
+    public function filter(Request $request)
+    {
+        // Start building the query
+        $query = Post::query();
+        if ($request->input('search')) {
+            $searchTerm = $request->input('search');
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('title', 'like', "%$searchTerm%")
+                  ->orWhere('location', 'like', "%$searchTerm%");
+            });
+        }
+        // Apply filters if they are present
+        
+        if ($request->filled('title')) {
+            $query->where('title', 'like', "%{$request->input('title')}%");
+        }
+
+        if ($request->filled('deadline')) {
+            $query->whereDate('deadline', $request->input('deadline'));
+        }
+
+        if ($request->filled('workType')) {
+            $query->where('workType', $request->input('workType'));
+        }
+
+        if ($request->filled('location')) {
+            $query->where('location', 'like', "%{$request->input('location')}%");
+        }
+
+        // Fetch filtered posts
+        $posts = $query->get();
+
+        // Return the view with posts and the current filter values
+        return view('posts.search', [
+            'posts' => $posts,
+            // 'title' => $request->input('title'),
+            // 'deadline' => $request->input('deadline'),
+            // 'workType' => $request->input('workType'),
+            // 'location' => $request->input('location'),
+        ]);
     }
 }

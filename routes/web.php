@@ -23,4 +23,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\JobBoardController::class, 'index'])->name('home');
 Route::resource("posts", PostController::class);
 Route::post('/search', [PostController::class, 'search'])->name('posts.search');
+Route::get('/search', [PostController::class, 'filter'])->name('posts.filter');
 
