@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\JobBoardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
@@ -20,5 +20,5 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\JobBoardController::class, 'index'])->name('home');
 Route::resource("posts", PostController::class);
