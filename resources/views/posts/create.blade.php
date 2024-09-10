@@ -1,10 +1,33 @@
-@extends('layouts.postLayout')
+@extends('layouts.app')
 
-@section('content')
+@section('navbar')
+<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <li class="nav-item active">
+        <a class="nav-link" href="#raina">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/posts/create">Create Post</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'approved']) }}">Approved Posts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'pending']) }}">Posts pending</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'rejected']) }}">Rejected Posts </a>
+    </li>
+</ul>
+@endsection
 
-<h1>Create New Post</h1>
+@section('main')
 
-<form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+<h1 style="text-align: center;">
+    Create New Post
+</h1>
+
+<form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" style="width: 70%;"
+    class="m-auto">
     @csrf
     <div class="row">
         <div class="col-md-6">
@@ -114,5 +137,7 @@
 
     <button type="submit" class="btn btn-primary">Create Post</button>
 </form>
+
+
 
 @endsection

@@ -1,9 +1,31 @@
-@extends('layouts.postLayout')
+@extends('layouts.app')
+
 @php
 use Carbon\Carbon;
 @endphp
 
-@section('content')
+@section('navbar')
+<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <li class="nav-item active">
+        <a class="nav-link" href="#raina">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/posts/create">Create Post</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'approved']) }}">Approved Posts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'pending']) }}">Posts pending</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'rejected']) }}">Rejected Posts </a>
+    </li>
+</ul>
+@endsection
+
+@section('main')
+
 <h1>Edit Post</h1>
 <form action="{{ route('posts.update', $post['id']) }}" method="POST" enctype="multipart/form-data">
     @csrf

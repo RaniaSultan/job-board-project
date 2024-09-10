@@ -43,6 +43,22 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="phone"
+                                class="col-md-4 col-form-label text-md-end">{{ __('Phone Number') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror"
+                                    name="phone" value="{{ old('phone') }}" required autocomplete="phone">
+
+                                @error('phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="password"
                                 class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
@@ -70,11 +86,11 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="type"
-                                class="col-md-4 col-form-label text-md-end">{{ __('Type') }}</label>
+                            <label for="type" class="col-md-4 col-form-label text-md-end">{{ __('Type') }}</label>
 
                             <div class="col-md-6">
-                                <select id="type" class="form-select form-select-lg mb-3 form-control" aria-label=".form-select-lg example" name="type" required>
+                                <select id="type" class="form-select form-select-lg mb-3 form-control"
+                                    aria-label=".form-select-lg example" name="type" required>
                                     <option selected>Choose Your Type</option>
                                     <option value="employer">Employer</option>
                                     <option value="candidate">Candidate</option>

@@ -1,10 +1,51 @@
-@extends('layouts.postLayout')
+@extends('layouts.app')
+
+@section('style')
+<style>
+.card {
+    position: relative;
+}
+
+.card-img-top {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.card-body {
+    margin-top: 10px;
+}
+</style>
+@endsection
 
 @php
 use Carbon\Carbon;
 @endphp
 
-@section('content')
+@section('navbar')
+<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <li class="nav-item active">
+        <a class="nav-link" href="#raina">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/posts/create">Create Post</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'approved']) }}">Approved Posts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'pending']) }}">Posts pending</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'rejected']) }}">Rejected Posts </a>
+    </li>
+</ul>
+@endsection
+
+@section('main')
 <div class="container mt-5">
     <!-- Job Post Card -->
     <div class="card mb-4 shadow-sm">
@@ -48,7 +89,7 @@ use Carbon\Carbon;
         </div>
         @if($post['status'] == 'approved')
         <div class="card-footer d-flex justify-content-start">
-            <a class="btn btn-primary me-2" href="Doaa">Applications</a>
+            <a class="btn btn-primary me-2" href="{{ route('applications.indexEmployerApp', $post['id']) }}">Applications</a>
             <a class="btn btn-primary me-2" href="Doaa">Comments</a>
             <a class="btn btn-primary me-2" href="{{ route('posts.edit', $post['id']) }}">Edit</a>
 
