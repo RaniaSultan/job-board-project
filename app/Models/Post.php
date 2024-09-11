@@ -25,12 +25,13 @@ class Post extends Model
         'category',
         'user_id'
     ];
-    
+
     //user has post relation
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
 
     //user apply post relation
     public function applicants(): BelongsToMany

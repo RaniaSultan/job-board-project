@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\JobBoardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ApplicationController;
@@ -21,11 +21,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// Route::resource("posts", PostController::class);
+Route::get('/home', [App\Http\Controllers\JobBoardController::class, 'index'])->name('home');
 Route::middleware(['auth', 'role:employer,admin'])->group(function () {
     Route::resource('posts', PostController::class);
 });
+Route::post('/search', [PostController::class, 'search'])->name('posts.search');
+
+// jobboard.show
+// Route::get('/posts/{id}', [JobBoardController::class, 'show'])->name('jobboard.show');
+
+// Route::resource("posts", PostController::class);
+
 
 // Route::resource('applications', (ApplicationController::class));
 Route::get('/applications/{post_id?}', [ApplicationController::class, 'index'])->name('applications.index');

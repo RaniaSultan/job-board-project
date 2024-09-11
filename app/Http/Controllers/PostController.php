@@ -14,6 +14,7 @@ class PostController extends Controller
     {
         $this->middleware('auth');
 
+
     }
 
 
@@ -103,16 +104,19 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        // if (!Auth::check()) {
-        //     return redirect('/login')->with('error', 'Please log in to view posts.');
-        // }
-        // $user = Auth::user();
-        // if (!in_array($user->type, ['employer', 'admin'])) {
-        //     //return redirect('/')->with('error', 'Access denied.');
-        //     abort(403, 'Access denied. You do not have permission to view this page.');
+        if (!Auth::check()) {
+            return redirect('/login')->with('error', 'Please log in to view posts.');
+        }
+        $user = Auth::user();
+        if (!in_array($user->type, ['employer', 'admin'])) {
+            //return redirect('/')->with('error', 'Access denied.');
+            abort(403, 'Access denied. You do not have permission to view this page.');
 
-        // }
-     return view('posts.show', compact('post'));
+        }
+
+            $post = Post::with('comments')->findOrFail($id); // Fetch post with related comments
+            return view('posts.show', compact('post'));
+ 
     }
 
 
