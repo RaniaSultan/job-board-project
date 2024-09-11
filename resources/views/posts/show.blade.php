@@ -2,9 +2,23 @@
 
 @section('style')
 <style>
-.card {
-    position: relative;
+body {
+    font-family: 'Roboto', sans-serif;
 }
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+} */
 
 .card-img-top {
     position: absolute;
@@ -13,10 +27,48 @@
     width: 70px;
     height: 70px;
     border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
 }
 
 .card-body {
-    margin-top: 10px;
+    margin-top: 22px;
+    padding: 20px;
+    background: #fff;
+}
+
+.card-title {
+    font-family: 'Lora', serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.card-text {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    line-height: 2.2;
+    color: #343a40;
+
+}
+
+.card-subtitle {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1rem;
+    color: #666;
+    font-style: italic;
+}
+
+
+
+.card-footer {
+    padding: 10px 20px;
+    background: #f1f1f1;
+    border-top: 1px solid #ddd;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.8rem;
+    color: #777;
 }
 </style>
 @endsection
@@ -50,41 +102,49 @@ use Carbon\Carbon;
     <!-- Job Post Card -->
     <div class="card mb-4 shadow-sm">
         <div class="card-body">
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center mb-3">
                 <h1 class="card-title mb-0 text-primary">{{ $post['title'] }}</h1>
                 <span class="ms-3 text-muted">Last Updated
                     {{ Carbon::parse($post['updated_at'])->format('d M Y, h:i A') }}.</span>
-                <img src="{{ asset('/storage/' . $post->logo) }}" class="card-img-top ms-auto mt-4" alt="Post Image"
+                <img src="{{ asset('/storage/' . $post->logo) }}" class="card-img-top ms-auto" alt="Post Image"
                     style="width: 75px; height: 75px; border-radius: 50%;">
             </div>
+
             <h5 class="card-subtitle mb-3 text-secondary">
-                <small>{{ $post['location'] }}</small> | <i><small>{{ $post['workType'] }}</small></i>
+                <small>{{ $post['location'] }}</small> <i class="material-icons" style="font-size:16px">location_on</i>
+                |
+                <i><small>{{ $post['workType'] }}</small></i>
             </h5>
 
-            <h4 class="card-text mb-3 text-primary"><strong>Job Description:</strong></h4>
-            <p class="card-text text-dark">{{ $post['description'] }}</p>
+            <div class="d-flex flex-column flex-md-row align-items-start mb-3">
+                <h4 class="card-title text-primary me-4 flex-shrink-0">Job Description:</h4>
+                <p class="card-text text-dark flex-grow-1">{{ $post['description'] }}</p>
+            </div>
 
-            <h2 class="card-title mb-4 text-primary">Job Details:</h2>
+            <div class="d-flex flex-column flex-md-row align-items-start mb-3">
+                <h4 class="card-title text-primary me-4 flex-shrink-0">Job Categories:</h4>
+                <p class="card-text text-dark flex-grow-1">{{ $post['category'] }}</p>
+            </div>
 
-            <div class="mb-3">
-                <h4 class="card-text mb-1 text-primary"><strong>Category:</strong></h4>
-                <p class="card-text text-dark">{{ $post['category'] }}</p>
+            <div class="d-flex flex-column flex-md-row align-items-start mb-3">
+                <h4 class="card-title text-primary me-4 flex-shrink-0">Skills:</h4>
+                <p class="card-text text-dark flex-grow-1">{{ $post['skills'] }}</p>
             </div>
-            <div class="mb-3">
-                <h4 class="card-text mb-1 text-primary"><strong>Skills:</strong></h4>
-                <p class="card-text text-dark">{{ $post['skills'] }}</p>
+
+            <div class="d-flex flex-column flex-md-row align-items-start mb-3">
+                <h4 class="card-title text-primary me-4 flex-shrink-0">Benefits:</h4>
+                <p class="card-text text-dark flex-grow-1">{{ $post['benefites'] }}</p>
             </div>
-            <div class="mb-3">
-                <h4 class="card-text mb-1 text-primary"><strong>Benefits:</strong></h4>
-                <p class="card-text text-dark">{{ $post['benefites'] }}</p>
+
+            <div class="d-flex flex-column flex-md-row align-items-start mb-3">
+                <h4 class="card-title text-primary me-4 flex-shrink-0"><strong>Salary:</strong></h4>
+                <p class="card-text text-dark flex-grow-1">{{ $post['salaryRange'] }}</p>
             </div>
-            <div class="mb-3">
-                <h4 class="card-text mb-1 text-primary"><strong>Salary:</strong></h4>
-                <p class="card-text text-dark">{{ $post['salaryRange'] }}</p>
-            </div>
-            <div class="mb-3">
-                <h4 class="card-text mb-1 text-primary"><strong>Deadline:</strong></h4>
-                <p class="card-text text-dark">{{ Carbon::parse($post['deadline'])->format('d M Y') }} at 12:00 AM</p>
+
+            <div class="d-flex flex-column flex-md-row align-items-start mb-3">
+                <h4 class="card-title text-primary me-4 flex-shrink-0"><strong>Deadline:</strong></h4>
+                <p class="card-text text-dark flex-grow-1">
+                    {{ Carbon::parse($post['deadline'])->format('d M Y') }} at 12:00 AM</p>
             </div>
         </div>
         @if($post['status'] == 'approved')
@@ -106,7 +166,6 @@ use Carbon\Carbon;
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="confirmModalLabel">Confirm Deletion</h5>
-                            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                         </div>
                         <div class="modal-body">
                             Are you sure you want to delete this post?
@@ -146,5 +205,7 @@ use Carbon\Carbon;
         }
     });
     </script>
+
+
 
     @endsection

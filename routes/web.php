@@ -33,3 +33,6 @@ Route::get('/applications/{post_id?}', [ApplicationController::class, 'index'])-
 // applications acceptence and rejection routes
 Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
 Route::post('/applications/{application}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
+
+// downloadResmume
+Route::get('/downloadResmume', [ApplicationController::class, 'downloadResume'])->name('downloadResume');

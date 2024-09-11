@@ -63,14 +63,14 @@ class PostController extends Controller
     // } else {
     //     return redirect()->route('posts.index', ['status' => 'approved']);
     // }
-    
+
     return view('posts.index', ['posts' => $posts, 'status' => $status]);
 
     }
 
 
 
-    public function create()
+    public function create(Post $post)
     {
         // if (!Auth::check()) {
         //     return redirect('/login')->with('error', 'Please log in to create posts.');
@@ -81,7 +81,7 @@ class PostController extends Controller
 
         }
         $users = User::all();
-        return view('posts.create', compact('users'));
+        return view('posts.create', compact('users','post'));
     }
 
 

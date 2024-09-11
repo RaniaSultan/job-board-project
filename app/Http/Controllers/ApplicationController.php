@@ -95,4 +95,15 @@ class ApplicationController extends Controller
 
         return to_route('applications.index', $postId)->with('status', 'Application rejected!');
     }
+
+    /**
+     * downloadResume.
+     */
+    public function downloadResume(Application $application)
+    {
+    $file = public_path('resumes/' .$application['resume']);
+        return response()->download($file);
+    }
+
+    //{{--asset('resumes/applications/' . $post['resume'])--}}
 }
