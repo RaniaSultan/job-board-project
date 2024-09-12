@@ -28,7 +28,19 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'content' => 'required|string',
+            'post_id' => 'required|exists:posts,id',
+        ]);
+
+        $comment = new Comment();
+        $comment->content = $request->input('content');
+        $comment->user_id = auth()->user()->id;
+        $comment->commentable_id = $request->input('post_id');
+        $comment->commentable_type = 'App\Models\Post';  // Assuming comments are for posts
+        $comment->save();
+
+        return redirect()->back()->with('success', 'Comment added successfully!');
     }
 
     /**
