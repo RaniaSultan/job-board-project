@@ -3,6 +3,7 @@ use App\Http\Controllers\JobBoardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,11 +20,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-// Route::resource("comments", PostController::class);
-// Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 Route::resource("comments", CommentController::class);
-// Route::get('/post/{id}', [PostController::class, 'showforeveryone'])->name('posts.showforeveryone');
 Route::get('/home', [App\Http\Controllers\JobBoardController::class, 'index'])->name('home');
 Route::resource("posts", PostController::class);
 Route::post('/search', [PostController::class, 'search'])->name('posts.search');

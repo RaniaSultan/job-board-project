@@ -1,103 +1,7 @@
 @extends('layouts.app')
-
-
-@section('style')
-<style>
-body {
-    font-family: 'Roboto', sans-serif;
-}
-
-.card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    background: #fff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-} */
-
-.card-img-top {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    object-fit: cover;
-}
-
-.card-body {
-    margin-top: 22px;
-    padding: 20px;
-    background: #fff;
-}
-
-.card-title {
-    font-family: 'Lora', serif;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #007bff;
-}
-
-.card-text {
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.9rem;
-    line-height: 2.2;
-    color: #343a40;
-
-}
-
-.card-subtitle {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.1rem;
-    color: #666;
-    font-style: italic;
-}
-
-
-
-.card-footer {
-    padding: 10px 20px;
-    background: #f1f1f1;
-    border-top: 1px solid #ddd;
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.8rem;
-    color: #777;
-}
-</style>
-@endsection
-
 @php
 use Carbon\Carbon;
 @endphp
-
-@section('navbar')
-<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-    <li class="nav-item active">
-        <a class="nav-link" href="#raina">Home</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/posts/create">Create Post</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('posts.index', ['status' => 'approved']) }}">Approved Posts</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('posts.index', ['status' => 'pending']) }}">Posts pending</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('posts.index', ['status' => 'rejected']) }}">Rejected Posts </a>
-    </li>
-</ul>
-@endsection
-
 @section('main')
 <div class="container mt-5">
     <!-- Job Post Card -->
@@ -276,3 +180,4 @@ use Carbon\Carbon;
             });
             </script>
             @endsection
+
