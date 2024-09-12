@@ -3,6 +3,7 @@ use App\Http\Controllers\JobBoardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::resource("comments", CommentController::class);
 Route::get('/home', [App\Http\Controllers\JobBoardController::class, 'index'])->name('home');
 Route::middleware(['auth', 'role:employer,admin'])->group(function () {
     Route::resource('posts', PostController::class);

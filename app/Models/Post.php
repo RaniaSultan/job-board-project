@@ -39,8 +39,11 @@ class Post extends Model
         return $this->belongsToMany(User::class, 'applications', 'post_id', 'user_id')->withPivot('resume', 'status')->withTimestamps();
     }
 
+
+
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable')->whereNull('post_id');
+        return $this->morphMany(Comment::class, 'commentable');
     }
+
 }

@@ -1,19 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Post;
 use App\Models\User;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+
 class PostController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-
 
     }
 
@@ -73,23 +73,26 @@ class PostController extends Controller
 
     public function create(Post $post)
     {
-        // if (!Auth::check()) {
-        //     return redirect('/login')->with('error', 'Please log in to create posts.');
-        // }
+
+        if (!Auth::check()) {
+            return redirect('/login')->with('error', 'Please log in to create posts.');
+        }
+
+
         $user = Auth::user();
         if ($user->type !== 'employer') {
             abort(403, 'Access denied. Only employers can create posts.');
-
         }
+
+
         $users = User::all();
         return view('posts.create', compact('users','post'));
     }
-
-
     public function store(StorePostRequest $request)
     {
         $data = $request->validated();
         $data['user_id'] = auth()->id();
+
         $logoPath = "";
         if ($request->hasFile('logo')) {
             $logo = $request->file('logo');
@@ -99,9 +102,15 @@ class PostController extends Controller
         $post = new Post($data);
         $post->save();
         //dd($post);
+
+        //Post::create($data);
+
         return redirect()->route('posts.index');
     }
 
+        // $post = new Post($data);
+        // $post->save();
+        // return redirect()->route('posts.index');
 
     public function show(Post $post)
     {
@@ -109,15 +118,13 @@ class PostController extends Controller
             return redirect('/login')->with('error', 'Please log in to view posts.');
         }
         $user = Auth::user();
-        if (!in_array($user->type, ['employer', 'admin'])) {
-            //return redirect('/')->with('error', 'Access denied.');
+        if (!in_array($user->type, ['employer', 'admin','candidate'])) {
             abort(403, 'Access denied. You do not have permission to view this page.');
-
         }
 
-          //  $post = Post::with('comments')->findOrFail($id); // Fetch post with related comments
-            return view('posts.show', compact('post'));
+        $post = Post::with(['comments.user'])->findOrFail($post->id);
 
+        return view('posts.showforeveryone', compact('post'));
     }
 
 
@@ -126,14 +133,30 @@ class PostController extends Controller
         // if (!Auth::check()) {
         //     return redirect('/login')->with('error', 'Please log in to edit posts.');
         // }
+
+
+
         $user = Auth::user();
         if ($user->type !== 'employer') {
             abort(403, 'Access denied. Only employers can edit posts.');
-
         }
+
         $users = User::all();
-        return view('posts.edit', compact('users'), compact('post'));
+        return view('posts.edit', compact('post', 'users'));
     }
+
+//     public function update(UpdatePostRequest $request, Post $post)
+//     {
+//         $data = $request->validated();
+//
+//         $user = Auth::user();
+//         if ($user->type !== 'employer') {
+//             abort(403, 'Access denied. Only employers can edit posts.');
+
+//         }
+//         $users = User::all();
+//         return view('posts.edit', compact('users'), compact('post'));
+//     }
 
 
     public function update(UpdatePostRequest $request, Post $post)
@@ -150,16 +173,24 @@ class PostController extends Controller
     // dd($data);
     //dd($post);
     return redirect()->route('posts.index');
+
     }
 
 
+  // public function showforeveryone(Post $post)
+    // {
+    //     if (!Auth::check()) {
+    //         return redirect('/login')->with('error', 'Please log in to view posts.');
+    //     }
 
+    //     $post = Post::with(['comments.user'])->findOrFail($post->id);
+
+    //     return view('posts.showforeveryone', compact('post'));
+    // }
 
     public function destroy(Post $post)
     {
         $post->delete();
-
-
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully');
     }
 }
