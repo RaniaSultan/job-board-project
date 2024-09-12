@@ -75,13 +75,13 @@ class PostController extends Controller
         }
 
         $user = Auth::user();
-        if (!in_array($user->type, ['employer', 'admin'])) {
+        if (!in_array($user->type, ['employer', 'admin','candidate'])) {
             abort(403, 'Access denied. You do not have permission to view this page.');
         }
 
         $post = Post::with(['comments.user'])->findOrFail($post->id);
 
-        return view('posts.show', compact('post'));
+        return view('posts.showforeveryone', compact('post'));
     }
 
     public function edit(Post $post)
@@ -113,6 +113,17 @@ class PostController extends Controller
 
         return redirect()->route('posts.index');
     }
+
+    // public function showforeveryone(Post $post)
+    // {
+    //     if (!Auth::check()) {
+    //         return redirect('/login')->with('error', 'Please log in to view posts.');
+    //     }
+
+    //     $post = Post::with(['comments.user'])->findOrFail($post->id);
+
+    //     return view('posts.showforeveryone', compact('post'));
+    // }
 
     public function destroy(Post $post)
     {
