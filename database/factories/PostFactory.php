@@ -32,4 +32,8 @@ class PostFactory extends Factory
             'user_id' => \App\Models\User::factory(),
         ];
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6fe561d (profile & application)
