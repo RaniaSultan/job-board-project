@@ -81,7 +81,7 @@ use Carbon\Carbon;
                 </div>
                 <input type="hidden" name="post_id" value="{{ $post->id }}">
                 <button type="submit" class="btn btn-outline-primary">
-                      <i class="fas fa-paper-plane" style="color: #0764ab;"></i>
+                    Comment
                 </button>
     
             </form>
