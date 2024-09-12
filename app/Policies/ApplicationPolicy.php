@@ -40,7 +40,11 @@ class ApplicationPolicy
      */
     public function update(User $user, Application $application): bool
     {
-        //
+        if ($user->id === $application->user_id) {
+            return true;
+        }
+
+        return false; //
     }
 
     /**
@@ -66,4 +70,10 @@ class ApplicationPolicy
     {
         //
     }
+
+public function accept(User $user, Application $application)
+{
+    // Logic to check if the user can accept the application
+    return $user->id === $application->user_id; // كمثال، يمكن للمستخدم صاحب التطبيق قبوله
+}
 }

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
-
 class CommentController extends Controller
 {
     /**
@@ -56,6 +55,7 @@ class CommentController extends Controller
      */
 
     public function show(string $id)
+
     {
         //
     }
@@ -65,6 +65,7 @@ class CommentController extends Controller
      */
 
     public function edit(string $id)
+
     {
         //
     }
@@ -74,6 +75,7 @@ class CommentController extends Controller
      */
 
     public function update(Request $request, string $id)
+
     {
         //
     }
