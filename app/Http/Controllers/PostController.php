@@ -98,6 +98,7 @@ class PostController extends Controller
         }
         $post = new Post($data);
         $post->save();
+        //dd($post);
         return redirect()->route('posts.index');
     }
 
@@ -114,9 +115,9 @@ class PostController extends Controller
 
         }
 
-            $post = Post::with('comments')->findOrFail($id); // Fetch post with related comments
+          //  $post = Post::with('comments')->findOrFail($id); // Fetch post with related comments
             return view('posts.show', compact('post'));
- 
+
     }
 
 
@@ -148,9 +149,7 @@ class PostController extends Controller
         $post->update($data);
     // dd($data);
     //dd($post);
-      return redirect()->route('posts.index');
-
-
+    return redirect()->route('posts.index');
     }
 
 
@@ -160,6 +159,7 @@ class PostController extends Controller
     {
         $post->delete();
 
-       return redirect()->route('posts.index')->with('success', 'Post deleted successfully');
+
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully');
     }
 }

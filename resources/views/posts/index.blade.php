@@ -4,7 +4,6 @@
 <style>
 body {
     font-family: 'Roboto', sans-serif;
-    /* تطبيق خط Roboto على الجسم بشكل عام */
 }
 
 .card {
@@ -40,7 +39,6 @@ body {
 
 .card-title {
     font-family: 'Lora', serif;
-    /* تطبيق خط Lora على العنوان */
     font-size: 1.5rem;
     font-weight: bold;
     color: #333;
@@ -48,7 +46,6 @@ body {
 
 .card-subtitle {
     font-family: 'Roboto', sans-serif;
-    /* تطبيق خط Roboto على الوصف الفرعي */
     font-size: 1.1rem;
     color: #666;
     font-style: italic;
@@ -56,7 +53,6 @@ body {
 
 .card-text {
     font-family: 'Roboto', sans-serif;
-    /* تطبيق خط Roboto على النص */
     font-size: 0.9rem;
     color: #333;
 }
@@ -66,7 +62,6 @@ body {
     background: #f1f1f1;
     border-top: 1px solid #ddd;
     font-family: 'Roboto', sans-serif;
-    /* تطبيق خط Roboto على القدمية */
     font-size: 0.8rem;
     color: #777;
 }
@@ -90,7 +85,7 @@ use Carbon\Carbon;
         <a class="nav-link" href="{{ route('posts.index', ['status' => 'approved']) }}">Approved Posts</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('posts.index', ['status' => 'pending']) }}">Posts pending</a>
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'pending']) }}">Pending Posts </a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('posts.index', ['status' => 'rejected']) }}">Rejected Posts </a>
@@ -110,36 +105,10 @@ use Carbon\Carbon;
 @if ($posts->count() > 0)
 @foreach($posts as $post)
 
-<!-- <div class="container mt-5">
-    <div class="card mb-4">
-        <img src="{{ asset('/storage/' . $post->logo) }}" class="card-img-top" alt="Post Image"
-            style="border-radius: 50%;">
 
-        <div class="card-body">
-            <div class="d-flex align-items-center">
-                <h3 class="card-title mb-0">{{ $post['title'] }}</h3>
-                <h5 class="card-subtitle mb-0 text-muted ms-2">
-                    <i><small>{{ $post['workType'] }}</small></i>
-                </h5>
-            </div>
-            <h5 class="card-subtitle mb-2 text-muted">
-                <small>{{ $post['location'] }}</small>
-            </h5>
-            <p class="card-text">{{ $post['description'] }}</p>
-            <div class="d-flex gap-2 mt-3">
-                <a href=" {{ route('posts.show', $post['id']) }}" class="btn btn-primary ReadMore">Read More</a>
-            </div>
-        </div>
-
-        <div class="card-footer text-muted">
-            Posted on {{ Carbon::parse($post['updated_at'])->format('d M Y, h:i A') }}, by {{ $post->user->name }}
-        </div>
-    </div>
-</div> -->
-<div class="container ">
-    <div class="card ">
-        <!-- صورة البطاقة -->
-        <img src="{{ asset('/storage/' . $post->logo) }}" class="card-img-top" alt="Post Image">
+<div class="container  mt-5">
+    <div class="card mb-2">
+        <img src="{{ asset('storage/' . $post->logo) }}" class="card-img-top" alt="Post Image">
 
         <div class="card-body">
             <div class="d-flex align-items-center mb-2">
@@ -150,9 +119,6 @@ use Carbon\Carbon;
             </div>
             <h5 class="card-subtitle mb-2 text-muted">
                 <small>{{ $post['location'] }}</small> <i class="material-icons">location_on</i>
-
-
-
             </h5>
             <p class="card-text">{{ $post['description'] }}</p>
             <div class="d-flex gap-2 mt-3">
@@ -177,7 +143,6 @@ use Carbon\Carbon;
 
 @endif
 <script>
-// app.js not work
 setTimeout(function() {
     documen
     t.getElementById('flash-message').style.display = 'none';
