@@ -23,7 +23,6 @@ class ApplicationController extends Controller
     /**application in progress */
     public function indexEmployerApp(Request $request, $postId = null)
     {
-        $this->authorize('viewAny', Application::class); // Ensure the user can view any applications
         $status = $request->query('status'); // Get the 'status' query parameter
         if ($postId) {
             // Fetch the post to ensure it exists
@@ -57,14 +56,14 @@ class ApplicationController extends Controller
                     break;
             }
 
-            return view('applications.indexEmployer', [ // in progress , create indexEmployer
+            return view('applications.index', [ // in progress , create indexEmployer
                 'applications' => $applications,
                 'currentStatus' => $status,
                 'post_id' => $postId
             ]);
         } else {
             // If no post ID is provided, return a message or redirect
-            return redirect()->route('posts.index')->with('error', 'Post ID is required to view applications.');
+            return redirect()->route('home')->with('error', 'Post ID is required to view applications.');
         }
     }
 
@@ -89,28 +88,30 @@ class ApplicationController extends Controller
 
     public function show(Application $application)
     {
-        $this->authorize('view', $application); // Ensure the user can view the application
-        return view('applications.show', ['application' => $application]);
+        
     }
 
     /**
      * Accept candidate application
      */
-    public function accept(Application $application)
+    public function accept(Request $request, Application $application)
     {
+        $postId = $request->input('postId');
         $application->status = 'accepted';
         $application->save();
-        return redirect()->route('applications.indexEmployerApp')->with('status', 'Application accepted!');
+        return redirect()->route('applications.indexEmployerApp', $postId)->with('status', 'Application accepted!');
     }
 
     /**
      * Reject candidate application
      */
-    public function reject(Application $application)
+    public function reject(Request $request, Application $application)
     {
+        $postId = $request->input('postId');
+
         $application->status = 'rejected';
         $application->save();
-        return redirect()->route('applications.indexEmployerApp')->with('status', 'Application rejected!');
+        return redirect()->route('applications.indexEmployerApp', $postId)->with('status', 'Application rejected!');
     }
 
     /**

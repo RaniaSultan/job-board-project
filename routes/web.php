@@ -49,7 +49,7 @@ Route::post('/search', [PostController::class, 'search'])->name('posts.search');
 
 
 Route::resource('applications', (ApplicationController::class));
-Route::get('/applications/{post_id?}', [ApplicationController::class, 'indexEmployerApp'])->name('applications.indexEmployerApp');
+Route::get('/indexEmployerApp/{post_id?}', [ApplicationController::class, 'indexEmployerApp'])->name('applications.indexEmployerApp');
 Route::get('/create/application/{post_id?}', action: [ApplicationController::class, 'createApp'])->name('applications.createApp');
 
 // applications acceptence and rejection routes
@@ -69,6 +69,7 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index
 Route::post('applications/{application}/cancel', [ApplicationController::class, 'cancel'])->name('applications.cancel');
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/admin/pending-posts', [AdminController::class, 'pendingPosts'])->name('admin.pending-posts');

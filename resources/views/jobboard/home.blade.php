@@ -5,11 +5,7 @@
 
 @extends('layouts.app')
 @section('content')
-@if (session('error'))
-<div class="alert alert-danger" id="flash-message">
-    {{ session('error') }}
-</div>
-@endif
+
 
 @if (session('status'))
 <div class="alert alert-success" id="flash-message">

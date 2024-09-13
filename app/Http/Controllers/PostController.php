@@ -180,13 +180,15 @@ class PostController extends Controller
     {
         // dd($request);
         // $posts = Post::where("category","like","%". $request->category ."%")->paginate(10);
-
-        $posts = Post::where('category', 'like', '%' . $request->search . '%')->paginate(10);
-        if (count($posts) > 0) {
+        $posts = Post::where('category', 'like', '%' . $request->search . '%')
+            ->orderBy('created_at', 'desc');
+        if ($posts->count() > 0) {
+            dd($posts);
             return view("posts.search", compact("posts"));
         } else {
             return to_route("home")->with('error', 'No Result Found');
         }
+
     }
 
     //filter
