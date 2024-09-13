@@ -3,8 +3,13 @@
 @php
     use Carbon\Carbon;
 @endphp
-
+ 
 @section('content')
+@if (session('status'))
+<div class="alert alert-success" id="flash-message">
+    {{ session('status') }}
+</div>
+@endif
 <div class="container mt-5">
     <!-- Job Post Card -->
     <div class="card mb-3" style="max-width: 100%;">

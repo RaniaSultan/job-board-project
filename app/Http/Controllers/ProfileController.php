@@ -10,7 +10,7 @@ class ProfileController extends Controller
     
         // public function index(Request $request, $status)
         public function index(Request $request)
-        {
+        { 
             $status = $request->query('status', 'waiting'); // Default to 'waiting' if no status is provided
     
             $applications = Application::where('user_id', Auth::id())
