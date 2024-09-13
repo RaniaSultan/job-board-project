@@ -55,7 +55,7 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    //user apply post relation    
+    //user apply post relation
     public function appliedPosts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'applications', 'user_id', 'post_id')
@@ -68,8 +68,11 @@ class User extends Authenticatable
         return $this->type === 'employer';
     }
 
+
+
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable')->whereNull('post_id');
+        return $this->hasMany(Comment::class);
     }
+
 }

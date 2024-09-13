@@ -12,6 +12,7 @@ Application Details
     <div class="card-body">
         <h5 class="card-title">Applicant jobTitle</h5>
         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
         <a href="{{--asset('resumes/applications/' . $post['resume'])--}}" class="btn btn-primary">Resume</a>
         <form action="{{ route('applications.accept', $application) }}" method="POST" style="display:inline;">
             @csrf

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Application extends Model
 {
     use HasFactory;
+    protected $fillable = ['user_id', 'job_id', 'status'];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -18,5 +20,10 @@ class Application extends Model
     {
         return $this->belongsTo(Post::class, 'post_id');
     }
+    
+/** back to aya*/
+    // public function job()
+    // {
+    //     return $this->belongsTo(Job::class, 'job_id');
+    // }
 }
-

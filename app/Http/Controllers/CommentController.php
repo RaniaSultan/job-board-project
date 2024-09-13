@@ -6,6 +6,7 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class CommentController extends Controller
 {
     /**
@@ -15,6 +16,7 @@ class CommentController extends Controller
     {
         $comments = Comment::paginate(3);
         return view('posts.show', compact('comments'));    /////
+
     }
 
     /**
@@ -24,24 +26,36 @@ class CommentController extends Controller
     {
         $user = Auth::user();
         return view('comments.create', compact('user'));
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Comment $comment)
+
+    public function store(Request $request)
     {
-        $data = request()->all();
-        $comment = Comment::create($data);
-        $post = Post::find($request->get('post_id'));
-        $post->comments()->save($comment);
-        return view('post.show', compact('post', 'comments'));
+        $request->validate([
+            'content' => 'required|string',
+            'post_id' => 'required|exists:posts,id',
+        ]);
+
+        $comment = new Comment();
+        $comment->content = $request->input('content');
+        $comment->user_id = auth()->user()->id;
+        $comment->commentable_id = $request->input('post_id');
+        $comment->commentable_type = 'App\Models\Post';  // Assuming comments are for posts
+        $comment->save();
+
+        return redirect()->back()->with('success', 'Comment added successfully!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Comment $comment)
+
+    public function show(string $id)
+
     {
         //
     }
@@ -49,7 +63,9 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Comment $comment)
+
+    public function edit(string $id)
+
     {
         //
     }
@@ -57,7 +73,9 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Comment $comment)
+
+    public function update(Request $request, string $id)
+
     {
         //
     }
@@ -65,8 +83,11 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+
+        return redirect()->route('posts.index')->with('success', 'Comment deleted successfully');
     }
 }

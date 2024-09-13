@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Support\Facades\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+
 
 class ApplicationController extends Controller
 {
@@ -16,7 +19,9 @@ class ApplicationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function indexEmployerApp(Request $request, $postId = null)
+
+/**application in progress */
+     public function indexEmployerApp(Request $request, $postId = null)
     {
         $this->authorize('viewAny', Application::class); // Ensure the user can view any applications
 
@@ -54,7 +59,7 @@ class ApplicationController extends Controller
                     break;
             }
 
-            return view('applications.index', [
+            return view('applications.indexEmployer', [ // in progress , create indexEmployer
                 'applications' => $applications,
                 'currentStatus' => $status,
                 'post_id' => $postId
@@ -64,40 +69,85 @@ class ApplicationController extends Controller
             return redirect()->route('posts.index')->with('error', 'Post ID is required to view applications.');
         }
     }
-
-    public function index()
+    public function index(Request $request)
     {
+        $this->authorize('viewAny', Application::class); // Ensure the user can view any applications
+        $status = $request->query('status', 'waiting'); // Get the 'status' query parameter, default to 'waiting'
+
+        // Filter applications based on status
+        $applications = Application::where('status', $status)->paginate(3);
+
+        return view('applications.index', [
+            'applications' => $applications,
+            'currentStatus' => $status
+        ]);
     }
+
+    
 
     /**
      * Display the specified resource.
      */
-    // public function show(Application $application)
-    // {
-    //     $this->authorize('view', $application); // Ensure the user can view the application
-    //     return view('applications.show', ['application' => $application]);
-    // }
+
+    public function show(Application $application)
+    {
+        $this->authorize('view', $application); // Ensure the user can view the application
+        return view('applications.show', ['application' => $application]);
+    }
 
     /**
      * Accept candidate application.
      */
-    public function accept(Application $application, $postId = null)
+
+     /**application in progress */
+
+    public function acceptEmployerApp(Application $application, $postId = null)
     {
         $application->status = 'accepted';
         $application->save();
 
-        return to_route('applications.index', $postId)->with('status', 'Application accepted!');
+        return to_route('applications.indexEmployer', $postId)->with('status', 'Application accepted!');
+    }
+    public function accept(Application $application)
+    {
+        $this->authorize('update', $application); // Ensure the user can update the application
+        $application->status = 'accepted';
+        $application->save();
+        return redirect()->route('applications.index')->with('status', 'Application accepted!');
     }
 
     /**
      * Reject candidate application.
      */
-    public function reject(Application $application, $postId = null)
+
+     /**application in progress */
+
+     public function rejectEmployerApp(Application $application, $postId = null)
     {
         $application->status = 'rejected';
         $application->save();
 
-        return to_route('applications.index', $postId)->with('status', 'Application rejected!');
+        return to_route('applications.indexEmployer', $postId)->with('status', 'Application rejected!');
+    }
+
+    /**
+     * downloadResume.
+     */
+    public function downloadResume(Application $application)
+    {
+    $file = public_path('resumes/' .$application['resume']);
+        return response()->download($file);
+    }
+
+    //{{--asset('resumes/applications/' . $post['resume'])--}}
+
+
+    public function reject(Application $application)
+    {
+        $this->authorize('update', $application); // Ensure the user can update the application
+        $application->status = 'rejected';
+        $application->save();
+        return redirect()->route('applications.index')->with('status', 'Application rejected!');
     }
 
     /**
@@ -105,7 +155,8 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        $user = Auth::user()->where('type', 'Candidate');
+        // $user = Auth::user()->where('type', 'Candidate');
+        $user = User::where('user_id', auth::id())->where('type', 'Candidate');
         return view('applications.create', compact('user'));
     }
 
@@ -130,5 +181,16 @@ class ApplicationController extends Controller
         $data['post_id'] = $postId; //post_id shall be available when merging with jobPost part
         $application = Application::create($data);
         return to_route('posts.show', $application)->with('status', 'Application Done!');
+    }
+
+
+     /*Cancel candidate application.
+     */
+    public function cancel(Application $application)
+    {
+        $this->authorize('update', $application); // Ensure the user can update the application
+        $application->status = 'cancelled';
+        $application->save();
+        return redirect()->route('applications.index')->with('status', 'Application cancelled!');
     }
 }
