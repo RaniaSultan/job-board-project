@@ -1,7 +1,8 @@
 <!-- resources/views/jobboard/home.blade.php -->
-<!-- @php
+<?php
     use Carbon\Carbon;
-@endphp -->
+?>
+
 @extends('layouts.app')
 @section('content')
 <div class="container">
@@ -9,7 +10,7 @@
         @foreach($posts as $post)
         <div class="container mt-5">
             <div class="card mb-4">
-                <img src="{{ asset('/storage/' . $post->logo) }}" class="card-img-top" alt="Post Image" style="border-radius: 50%;">
+                <img src="{{ asset('images/posts/' . $post->logo) }}" class="card-img-top" alt="Post Image" style="border-radius: 50%;">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <h3 class="card-title mb-0">{{ $post->title }}</h3>
@@ -22,7 +23,7 @@
                     </h5>
                     <p class="card-text">{{ $post->description }}</p>
                     <div class="d-flex gap-2 mt-3">
-                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary">Read More</a>
+                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-outline-primary">Read More</a>
                     </div>
                 </div>
                 <div class="card-footer text-muted">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
-
+<?php
 use Carbon\Carbon;
-@endphp
+?>
 
 @section('navbar')
 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -23,37 +23,6 @@ use Carbon\Carbon;
 </ul>
 @endsection
 
-@section('main')
-<style>
-.form-background {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-    font-family: 'Roboto', sans-serif;
-}
-
-.form-background label {
-    font-family: 'Lora', serif;
-    font-weight: bold;
-}
-
-.form-background .form-control {
-    font-family: 'Roboto', sans-serif;
-}
-
-.form-background .form-check-label {
-    font-family: 'Lora', serif;
-}
-
-.form-background .alert {
-    font-family: 'Roboto', sans-serif;
-}
-
-.form-background button {
-    font-family: 'Roboto', sans-serif;
-}
-</style>
 
 <!-- <h1 class="text-primary" style="text-align: center;">Edit Post</h1> <br> -->
 <!-- <form action="{{ route('posts.update', $post['id']) }}" method="POST" enctype="multipart/form-data" style="width: 70%;"
@@ -176,7 +145,7 @@ use Carbon\Carbon;
 
     <button type="submit" class="btn btn-primary">Updaet Post</button>
 </form> -->
-
+@section('main')
 <form action="{{ route('posts.update', $post['id']) }}" method="POST" enctype="multipart/form-data"
     class="container mt-4 form-background">
     @csrf
@@ -284,13 +253,13 @@ use Carbon\Carbon;
                 {{ old('workType', $post['workType']) == 'hybrid' ? 'checked' : '' }} required>
             <label class="form-check-label" for="hybrid">Hybrid</label>
         </div>
-    </div>
+    </div> 
 
     <div class="form-group mb-4">
         <label class="text-primary" for="logo">Logo</label>
         <input type="file" name="logo" id="logo" class="form-control">
         @if($post->logo)
-        <img src="{{ asset('/storage/' . $post->logo) }}" width="100" height="100" class="mt-2"
+        <img src="{{ asset('images/posts/' . $post->logo) }}" width="100" height="100" class="mt-2"
             style="border-radius: 50%;" alt="Post Logo">
         @endif
         @error('logo')

@@ -1,72 +1,6 @@
 @extends('layouts.app')
 
-@section('style')
-<style>
-body {
-    font-family: 'Roboto', sans-serif;
-}
 
-.card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    background: #fff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.card-img-top {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    object-fit: cover;
-}
-
-.card-body {
-    padding: 20px;
-    background: #fafafa;
-}
-
-.card-title {
-    font-family: 'Lora', serif;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-}
-
-.card-subtitle {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.1rem;
-    color: #666;
-    font-style: italic;
-}
-
-.card-text {
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.9rem;
-    color: #333;
-}
-
-.card-footer {
-    padding: 10px 20px;
-    background: #f1f1f1;
-    border-top: 1px solid #ddd;
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.8rem;
-    color: #777;
-}
-</style>
-@endsection
 
 @php
 use Carbon\Carbon;
@@ -113,7 +47,7 @@ use Carbon\Carbon;
 
 <div class="container  mt-5">
     <div class="card mb-2">
-        <img src="{{ asset('storage/' . $post->logo) }}" class="card-img-top" alt="Post Image">
+        <img src="{{ asset('images/posts/' .$post->logo ) }}" class="card-img-top" alt="Post Image">
 
         <div class="card-body">
             <div class="d-flex align-items-center mb-2">
@@ -128,7 +62,7 @@ use Carbon\Carbon;
             <p class="card-text">{{ $post['description'] }}</p>
             <div class="d-flex gap-2 mt-3">
 
-                <a href="{{ route('posts.show', $post['id']) }}" class="btn btn-primary">Read More</a>
+                <a href="{{ route('posts.show', $post['id']) }}" class="btn btn-outline-primary">Read More</a>
             </div>
         </div>
 

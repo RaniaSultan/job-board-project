@@ -26,36 +26,6 @@
     Create New Post
 </h1>
 
-<style>
-.form-background {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-    font-family: 'Roboto', sans-serif;
-}
-
-.form-background label {
-    font-family: 'Lora', serif;
-    font-weight: bold;
-}
-
-.form-background .form-control {
-    font-family: 'Roboto', sans-serif;
-}
-
-.form-background .form-check-label {
-    font-family: 'Lora', serif;
-}
-
-.form-background .alert {
-    font-family: 'Roboto', sans-serif;
-}
-
-.form-background button {
-    font-family: 'Roboto', sans-serif;
-}
-</style>
 
 <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" style="width: 70%;"
     class="m-auto form-background">

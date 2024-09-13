@@ -32,7 +32,7 @@ class PostController extends Controller
         // }
 
     $status = $request->query('status');
-
+ 
     //all posts
     if ($status === 'approved') {
         $posts = Post::where('status', 'approved')->orderBy('created_at', 'desc')->get();
@@ -97,7 +97,7 @@ class PostController extends Controller
         $logoPath = "";
         if ($request->hasFile('logo')) {
             $logo = $request->file('logo');
-            $logoPath = $logo->store('post_images', 'public');
+            $logoPath = $logo->store('images', 'logo');
             $data['logo'] = $logoPath;
         }
         $post = new Post($data);
@@ -162,13 +162,13 @@ class PostController extends Controller
 
 
     public function update(UpdatePostRequest $request, Post $post)
-    {
+    { 
         $data = $request->validated();
         // dd($data);
 
         if ($request->hasFile('logo')) {
             $logo = $request->file('logo');
-            $logoPath = $logo->store('post_images', 'public');
+            $logoPath = $logo->store('images', 'logo');
             $data['logo'] = $logoPath;
         }
         $post->update($data);

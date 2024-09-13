@@ -32,7 +32,7 @@ class StorePostRequest extends FormRequest
             'skills' => 'required',
             'salaryRange' => 'required',
             'benefites' => 'required',
-            'logo' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'logo' => 'image|mimes:jpeg,png,jpg|max:2048',//need to be handeled
             'category' => 'required',
         ];
     }

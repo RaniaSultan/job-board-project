@@ -11,6 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
+     
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
@@ -18,6 +19,104 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <!-- @yield('style') -->
+
+<style>
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+} */
+
+.card-img-top {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 20px;
+    background: #fafafa;
+}
+
+.card-title {
+    font-family: 'Lora', serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.card-subtitle {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1rem;
+    color: #666;
+    font-style: italic;
+}
+
+.card-text {
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.card-footer {
+    padding: 10px 20px;
+    background: #f1f1f1;
+    border-top: 1px solid #ddd;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.8rem;
+    color: #777;
+}
+
+/* create and edit post */
+.form-background {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.form-background label {
+    font-family: 'Lora', serif;
+    font-weight: bold;
+}
+
+.form-background .form-control {
+    font-family: 'Roboto', sans-serif;
+}
+
+.form-background .form-check-label {
+    font-family: 'Lora', serif;
+}
+
+.form-background .alert {
+    font-family: 'Roboto', sans-serif;
+}
+
+.form-background button {
+    font-family: 'Roboto', sans-serif;
+}
+</style>
+
 </head>
 
 <body>
@@ -51,8 +150,7 @@
                                     Posts</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('posts.index', ['status' => 'pending']) }}">Posts
-                                    pending</a>
+                                <a class="nav-link" href="{{ route('posts.index', ['status' => 'pending']) }}">Pending Posts</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('posts.index', ['status' => 'rejected']) }}">Rejected
@@ -134,7 +232,7 @@
 
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/home">Profile</a>
+                                <a class="nav-link" href="{{route('profile.index')}}">Profile</a>
                             </li>
 
 
@@ -209,7 +307,7 @@
                                 <a class="nav-link" href="/home">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/home">Pending Posts</a>
+                                <a class="nav-link" href="{{route('posts.index',['status' => 'pending'])}}">Pending Posts</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/home">Stattistic</a>
@@ -342,6 +440,8 @@
                                 {{ session('error') }}
                             </div>
                         @endif
+                        @yield('main')
+ 
                         @yield('content')
 
 
