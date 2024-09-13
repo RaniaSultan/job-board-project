@@ -46,7 +46,7 @@ Route::post('/search', [PostController::class, 'search'])->name('posts.search');
 
 Route::resource('applications', (ApplicationController::class));
 Route::get('/applications/{post_id?}', [ApplicationController::class, 'indexEmployerApp'])->name('applications.indexEmployerApp');
-Route::get('/create/application/{post_id?}', [ApplicationController::class, 'createApp'])->name('applications.createApp');
+Route::get('/create/application/{post_id?}', action: [ApplicationController::class, 'createApp'])->name('applications.createApp');
 
 // applications acceptence and rejection routes
 Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');

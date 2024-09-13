@@ -31,37 +31,36 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .card-img-top {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        /* .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        } */
+
+        .card-img-side {
             width: 70px;
             height: 70px;
             border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+            float: left;
+            position: absolute;
+            top: 10px;
+            right: 10px;
             border: 2px solid #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             object-fit: cover;
         }
 
         .card-body {
-            margin-top: 22px;
             padding: 20px;
-            background: #fff;
+            background: #fafafa;
         }
 
         .card-title {
             font-family: 'Lora', serif;
             font-size: 1.5rem;
             font-weight: bold;
-            color: #007bff;
-        }
-
-        .card-text {
-            font-family: 'Roboto', sans-serif;
-            font-size: 0.9rem;
-            line-height: 2.2;
-            color: #343a40;
-
+            color: #333;
         }
 
         .card-subtitle {
@@ -69,6 +68,12 @@
             font-size: 1.1rem;
             color: #666;
             font-style: italic;
+        }
+
+        .card-text {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+            color: #333;
         }
 
         .card-footer {
@@ -115,7 +120,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">Xcompany</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

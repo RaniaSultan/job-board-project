@@ -86,8 +86,9 @@ All Applications
         {{$application->user->name}}
     </div>
     <div class="card-body">
-        <h5 class="card-title">Applicant jobTitle</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <!-- <h5 class="card-title">Applicant jobTitle</h5> -->
+        <p class="card-text">Email: $application->user->email</p>
+        <p class="card-text">Phone: $application->user->phone</p>
         <a href="{{ route('applications.show', $application) }}" class="btn btn-primary">Show Details</a>
 
         @if ($currentStatus == 'waiting')

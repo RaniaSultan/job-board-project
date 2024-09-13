@@ -47,7 +47,7 @@ use Carbon\Carbon;
 
 <div class="container  mt-5">
     <div class="card mb-2">
-        <img src="{{ asset('images/posts/' .$post->logo ) }}" class="card-img-top" alt="Post Image">
+        <img src="{{ asset('images/posts/' .$post->logo ) }}" class="card-img-side" alt="Post Image">
 
         <div class="card-body">
             <div class="d-flex align-items-center mb-2">
