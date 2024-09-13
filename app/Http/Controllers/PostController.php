@@ -181,9 +181,10 @@ class PostController extends Controller
         // dd($request);
         // $posts = Post::where("category","like","%". $request->category ."%")->paginate(10);
         $posts = Post::where('category', 'like', '%' . $request->search . '%')
-            ->orderBy('created_at', 'desc');
+            ->orderBy('created_at', 'desc')->get();
+            // dd($posts);
+
         if ($posts->count() > 0) {
-            dd($posts);
             return view("posts.search", compact("posts"));
         } else {
             return to_route("home")->with('error', 'No Result Found');
@@ -227,10 +228,6 @@ class PostController extends Controller
         // Return the view with posts and the current filter values
         return view('posts.search', [
             'posts' => $posts,
-            // 'title' => $request->input('title'),
-            // 'deadline' => $request->input('deadline'),
-            // 'workType' => $request->input('workType'),
-            // 'location' => $request->input('location'),
         ]);
     }
 }

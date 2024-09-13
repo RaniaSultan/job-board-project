@@ -45,7 +45,7 @@ All Applications
         <p class="card-text">Email: {{$application->user->email}}</p>
         <p class="card-text">Phone: {{$application->user->phone}}</p>
         <a href="" class="btn btn-outline-primary">Resume</a>
-
+ 
         @if ($currentStatus == 'waiting')
         <form action="{{ route('applications.accept', $application) }}" method="POST" style="display:inline;">
             @csrf
