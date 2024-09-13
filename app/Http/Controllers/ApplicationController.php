@@ -169,22 +169,24 @@ class ApplicationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Application $application, $postId)
+    public function store(Request $request)
     {
         // check that candidate have not applied for this job post before
         $application = Application::where('user_id', auth::id())->where('post_id', $postId);
         if ($application) {
             return to_route('home', $application)->with('status', 'Application Exists Already!');
         }
+        $postId = $request->input('postId');
         $resume_path = '';
         $data = request()->all();
+        dd($data);
         if (request()->hasFile('pdf')) {
             $resume = request()->file('pdf');
             $resume_path = $resume->store('resumes', 'applicants_resumes');
         }
         $data['resume'] = $resume_path;
         $data['user_id'] = auth::id();
-        $data['post_id'] = $postId; 
+        $data['post_id'] = $data-> postId; 
         $application = Application::create($data);
         return to_route('posts.showForEveryOne')->with('status', 'Application Done!');
     }
