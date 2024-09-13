@@ -23,7 +23,7 @@
                     </h5>
                     <p class="card-text">{{ $post->description }}</p>
                     <div class="d-flex gap-2 mt-3">
-                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-outline-primary">Read More</a>
+                        <a href="{{ route('posts.showForEveryOne', $post->id) }}" class="btn btn-outline-primary">Read More</a>
                     </div>
                 </div>
                 <div class="card-footer text-muted">

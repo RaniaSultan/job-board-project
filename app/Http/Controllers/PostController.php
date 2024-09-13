@@ -21,52 +21,30 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        // if (!Auth::check()) {
-        //     return redirect('/login')->with('error', 'Access denied. You do not have permission to view this page');
-        // }
-        // $user = Auth::user();
-        // if (!in_array($user->type, ['employer', 'admin'])) {
-        //  //   return redirect('/')->with('error', 'Access denied.');
-        //     abort(403, 'Access denied. You do not have permission to view this page.');
+        $status = $request->query('status');
 
-        // }
+        //my posts
 
-    $status = $request->query('status');
- 
-    //all posts
-    if ($status === 'approved') {
-        $posts = Post::where('status', 'approved')->orderBy('created_at', 'desc')->get();
-    } elseif ($status === 'pending') {
-        $posts = Post::where('status', 'pending')->orderBy('created_at', 'desc')->get();
-    } elseif ($status === 'rejected') {
-        $posts = Post::where('status', 'rejected')->orderBy('created_at', 'desc')->get();
-    } else {
-        return redirect()->route('posts.index', ['status' => 'approved']);
-    }
+        if ($status === 'approved') {
+            $posts = Post::where('user_id', Auth::id())
+                ->where('status', 'approved')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } elseif ($status === 'pending') {
+            $posts = Post::where('user_id', Auth::id())
+                ->where('status', 'pending')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } elseif ($status === 'rejected') {
+            $posts = Post::where('user_id', Auth::id())
+                ->where('status', 'rejected')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } else {
+            return redirect()->route('posts.index', ['status' => 'approved']);
+        }
 
-
-     //my posts
-
-    // if ($status === 'approved') {
-    //     $posts = Post::where('user_id', Auth::id())
-    //                 ->where('status', 'approved')
-    //                 ->orderBy('created_at', 'desc')
-    //                 ->get();
-    // } elseif ($status === 'pending') {
-    //     $posts = Post::where('user_id', Auth::id())
-    //                 ->where('status', 'pending')
-    //                 ->orderBy('created_at', 'desc')
-    //                 ->get();
-    // } elseif ($status === 'rejected') {
-    //     $posts = Post::where('user_id', Auth::id())
-    //                 ->where('status', 'rejected')
-    //                 ->orderBy('created_at', 'desc')
-    //                 ->get();
-    // } else {
-    //     return redirect()->route('posts.index', ['status' => 'approved']);
-    // }
-
-    return view('posts.index', ['posts' => $posts, 'status' => $status]);
+        return view('posts.index', ['posts' => $posts, 'status' => $status]);
 
     }
 
@@ -87,7 +65,7 @@ class PostController extends Controller
 
 
         $users = User::all();
-        return view('posts.create', compact('users','post'));
+        return view('posts.create', compact('users', 'post'));
     }
     public function store(StorePostRequest $request)
     {
@@ -109,22 +87,23 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-        // $post = new Post($data);
-        // $post->save();
-        // return redirect()->route('posts.index');
+    // $post = new Post($data);
+    // $post->save();
+    // return redirect()->route('posts.index');
 
     public function show(Post $post)
     {
+    }
+    public function showForEveryOne($id)
+    {
+
         if (!Auth::check()) {
             return redirect('/login')->with('error', 'Please log in to view posts.');
         }
         $user = Auth::user();
 
-        if (!in_array($user->type, ['employer', 'admin','candidate'])) {
-            abort(403, 'Access denied. You do not have permission to view this page.');
-        }
-
-        $post = Post::with(['comments.user'])->findOrFail($post->id);
+        $post = Post::with(['comments.user'])->findOrFail($id);
+        // dd($post);
 
         return view('posts.showforeveryone', compact('post'));
     }
@@ -147,7 +126,7 @@ class PostController extends Controller
         return view('posts.edit', compact('post', 'users'));
     }
 
-//     public function update(UpdatePostRequest $request, Post $post)
+    //     public function update(UpdatePostRequest $request, Post $post)
 //     {
 //         $data = $request->validated();
 //
@@ -155,14 +134,14 @@ class PostController extends Controller
 //         if ($user->type !== 'employer') {
 //             abort(403, 'Access denied. Only employers can edit posts.');
 
-//         }
+    //         }
 //         $users = User::all();
 //         return view('posts.edit', compact('users'), compact('post'));
 //     }
 
 
     public function update(UpdatePostRequest $request, Post $post)
-    { 
+    {
         $data = $request->validated();
         // dd($data);
 
@@ -172,14 +151,14 @@ class PostController extends Controller
             $data['logo'] = $logoPath;
         }
         $post->update($data);
-    // dd($data);
-    //dd($post);
-    return redirect()->route('posts.index');
+        // dd($data);
+        //dd($post);
+        return redirect()->route('posts.index');
 
     }
 
 
-  // public function showforeveryone(Post $post)
+    // public function showforeveryone(Post $post)
     // {
     //     if (!Auth::check()) {
     //         return redirect('/login')->with('error', 'Please log in to view posts.');
@@ -201,14 +180,11 @@ class PostController extends Controller
     {
         // dd($request);
         // $posts = Post::where("category","like","%". $request->category ."%")->paginate(10);
-        
+
         $posts = Post::where('category', 'like', '%' . $request->search . '%')->paginate(10);
-        if(count($posts) > 0)
-        {
+        if (count($posts) > 0) {
             return view("posts.search", compact("posts"));
-        }
-        else
-        {
+        } else {
             return to_route("home")->with('error', 'No Result Found');
         }
     }
@@ -220,13 +196,13 @@ class PostController extends Controller
         $query = Post::query();
         if ($request->input('search')) {
             $searchTerm = $request->input('search');
-            $query->where(function($q) use ($searchTerm) {
+            $query->where(function ($q) use ($searchTerm) {
                 $q->where('title', 'like', "%$searchTerm%")
-                  ->orWhere('location', 'like', "%$searchTerm%");
+                    ->orWhere('location', 'like', "%$searchTerm%");
             });
         }
         // Apply filters if they are present
-        
+
         if ($request->filled('title')) {
             $query->where('title', 'like', "%{$request->input('title')}%");
         }
