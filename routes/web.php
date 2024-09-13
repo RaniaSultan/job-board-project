@@ -34,7 +34,7 @@ Route::get('/search', [PostController::class, 'filter'])->name('posts.filter');
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::resource("posts", PostController::class);
 
-Route::resource("comments", CommentController::class);
+// Route::resource("comments", CommentController::class);
 Route::get('/home', [App\Http\Controllers\JobBoardController::class, 'index'])->name('home');
 Route::middleware(['auth', 'role:employer,admin'])->group(function () {
     Route::resource('posts', PostController::class);
@@ -46,6 +46,7 @@ Route::post('/search', [PostController::class, 'search'])->name('posts.search');
 
 Route::resource('applications', (ApplicationController::class));
 Route::get('/applications/{post_id?}', [ApplicationController::class, 'indexEmployerApp'])->name('applications.indexEmployerApp');
+Route::get('/create/application/{post_id?}', [ApplicationController::class, 'createApp'])->name('applications.createApp');
 
 // applications acceptence and rejection routes
 Route::post('/applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
