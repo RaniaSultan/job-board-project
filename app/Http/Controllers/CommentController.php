@@ -76,7 +76,7 @@ class CommentController extends Controller
 
     public function update(Request $request, Comment $comment)
     {
-        // تحقق أن المستخدم الذي يحاول التعديل هو من أنشأ التعليق أو أنه Admin
+        
         if (auth()->user()->id !== $comment->user_id && auth()->user()->type !== 'admin') {
             return redirect()->back()->with('error', 'You are not authorized to edit this comment.');
         }

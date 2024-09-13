@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,8 @@ use App\Http\Controllers\AdminController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::resource('users', UserController::class);
+Route::get('/admin/usermanagement', [UserController::class, 'index'])->name('admin.usermanagement');
 
 Auth::routes();
 
@@ -34,7 +38,7 @@ Route::get('/search', [PostController::class, 'filter'])->name('posts.filter');
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::resource("posts", PostController::class);
 
-// Route::resource("comments", CommentController::class);
+Route::resource("comments", CommentController::class);
 Route::get('/home', [App\Http\Controllers\JobBoardController::class, 'index'])->name('home');
 Route::middleware(['auth', 'role:employer,admin'])->group(function () {
     Route::resource('posts', PostController::class);
