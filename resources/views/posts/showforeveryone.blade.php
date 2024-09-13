@@ -157,8 +157,9 @@
                         </div>
 
                         <!-- Edit Button -->
+                        @if(Auth::check() && (Auth::user()->id == $comment->user_id ))
                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editCommentModal-{{ $comment->id }}">Edit</button>
-
+                        @endif
                         <!-- Edit Comment Modal -->
                         <div class="modal fade" id="editCommentModal-{{ $comment->id }}" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">
                             <div class="modal-dialog">

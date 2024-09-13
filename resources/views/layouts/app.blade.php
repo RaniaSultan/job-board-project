@@ -10,9 +10,9 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <style>
-        .alert {
+
+<style>
+.alert {
             margin-top: 20px;
             text-align: center;
             font-weight: bold;
@@ -120,7 +120,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">Xcompany</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -135,30 +135,31 @@
                         @auth
                             <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
                             @if (Auth::user()->type === 'admin')
-                                <li class="nav-item"><a class="nav-link" href="{{ route('admin.pending-posts') }}">Pending
-                                        Posts</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/home">Statistics</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('admin.pending-posts') }}">Pending Posts</a></li>
+                                
+                                <li class="nav-item"><a class="nav-link" href="{{ route('admin.usermanagement') }}">User Management</a></li>
+                                <!-- <li class="nav-item"><a class="nav-link" href="/home">Statistics</a></li> -->
+                         
                             @endif
                             @if (Auth::user()->type === 'employer')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/posts/create">Create Post</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('posts.index', ['status' => 'approved']) }}">Approved
-                                        Posts</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('posts.index', ['status' => 'pending']) }}">Pending
-                                        Posts</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('posts.index', ['status' => 'rejected']) }}">Rejected
-                                        Posts </a>
-                                </li>
-
+                            <li class="nav-item">
+                                <a class="nav-link" href="/posts/create">Create Post</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('posts.index', ['status' => 'approved']) }}">Approved
+                                    Posts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('posts.index', ['status' => 'pending']) }}">Pending Posts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('posts.index', ['status' => 'rejected']) }}">Rejected
+                                    Posts </a>
+                            </li>
+    
                             @endif
                             @if (Auth::user()->type === 'candidate')
-                                <li class="nav-item"><a class="nav-link" href="/home">Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/home">Profile</a></li>    
                             @endif
                         @endauth
                     </ul>
@@ -168,28 +169,23 @@
                         @guest
                             <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
                             @if (Route::has('register'))
-                                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                             @endif
                         @else
                             <li class="nav-item">
                                 <form class="d-flex" method="post" action="{{ route('posts.search') }}">
                                     @csrf
-                                    <input class="form-control me-2" type="search" placeholder="Search" name="search"
-                                        value="{{ request('search') }}">
+                                    <input class="form-control me-2" type="search" placeholder="Search" name="search" value="{{ request('search') }}">
                                     <button class="btn btn-outline-success" type="submit">Search</button>
                                 </form>
                             </li>
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ Auth::user()->name }}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf
-                                    </form>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
                                 </div>
                             </li>
                         @endguest
