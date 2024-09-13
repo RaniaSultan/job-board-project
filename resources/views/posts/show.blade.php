@@ -47,7 +47,7 @@ use Carbon\Carbon;
 
 @section('main')
 <div class="container mt-5">
-    <!-- Job Post Card -->
+    <!-- Job Post Card --> 
     <div class="card mb-4 shadow-sm">
         <div class="card-body">
             <div class="d-flex align-items-center">

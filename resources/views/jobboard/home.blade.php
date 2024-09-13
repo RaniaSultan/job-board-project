@@ -27,6 +27,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-muted">
+                    
                     Posted on {{ Carbon::parse($post->updated_at)->format('d M Y, h:i A') }}, by {{ $post->user->name }}
                 </div>
             </div>

@@ -8,6 +8,8 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 class PostController extends Controller
 {
     public function __construct()
@@ -103,15 +105,17 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        // if (!Auth::check()) {
-        //     return redirect('/login')->with('error', 'Please log in to view posts.');
-        // }
-        // $user = Auth::user();
-        // if (!in_array($user->type, ['employer', 'admin'])) {
-        //     //return redirect('/')->with('error', 'Access denied.');
-        //     abort(403, 'Access denied. You do not have permission to view this page.');
+        if (!Auth::check()) {
+            return redirect('/login')->with('error', 'Please log in to view posts.');
+        }
+        $user = Auth::user();
+        Log::info('Controller role check:', ['role' => $user->type]);
 
-        // }
+        if (!in_array($user->type, ['employer', 'admin', 'candidate'])) {
+            //return redirect('/')->with('error', 'Access denied.');
+            abort(403, 'Access denied. You do not have permission to view this page.');
+
+        }
      return view('posts.show', compact('post'));
     }
 
@@ -151,11 +155,70 @@ class PostController extends Controller
 
 
 
-
+ 
     public function destroy(Post $post)
     {
         $post->delete();
 
        return redirect()->route('posts.index')->with('success', 'Post deleted successfully');
+    }
+
+    public function search(Request $request)
+    {
+        // dd($request);
+        // $posts = Post::where("category","like","%". $request->category ."%")->paginate(10);
+        
+        $posts = Post::where('category', 'like', '%' . $request->search . '%')->paginate(10);
+        if(count($posts) > 0)
+        {
+            return view("posts.search", compact("posts"));
+        }
+        else
+        {
+            return to_route("home")->with('error', 'No Result Found');
+        }
+    }
+
+    //filter
+    public function filter(Request $request)
+    {
+        // Start building the query
+        $query = Post::query();
+        if ($request->input('search')) {
+            $searchTerm = $request->input('search');
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('title', 'like', "%$searchTerm%")
+                  ->orWhere('location', 'like', "%$searchTerm%");
+            });
+        }
+        // Apply filters if they are present
+        
+        if ($request->filled('title')) {
+            $query->where('title', 'like', "%{$request->input('title')}%");
+        }
+
+        if ($request->filled('deadline')) {
+            $query->whereDate('deadline', $request->input('deadline'));
+        }
+
+        if ($request->filled('workType')) {
+            $query->where('workType', $request->input('workType'));
+        }
+
+        if ($request->filled('location')) {
+            $query->where('location', 'like', "%{$request->input('location')}%");
+        }
+
+        // Fetch filtered posts
+        $posts = $query->get();
+
+        // Return the view with posts and the current filter values
+        return view('posts.search', [
+            'posts' => $posts,
+            // 'title' => $request->input('title'),
+            // 'deadline' => $request->input('deadline'),
+            // 'workType' => $request->input('workType'),
+            // 'location' => $request->input('location'),
+        ]);
     }
 }

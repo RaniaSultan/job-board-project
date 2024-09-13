@@ -75,7 +75,7 @@ use Carbon\Carbon;
 
             <h5 class="card-subtitle mb-2 text-muted">
                 <small>{{ $post['location'] }}</small>
-            </h5>
+            </h5> 
             <p class="card-text">{{ $post['description'] }}</p>
             <div class="d-flex gap-2 mt-3">
                 <a href=" {{ route('posts.show', $post['id']) }}" class="btn btn-primary">Read More</a>

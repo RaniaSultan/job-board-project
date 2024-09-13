@@ -22,15 +22,17 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::get('/home', [App\Http\Controllers\JobBoardController::class, 'index'])->name('home');
+Route::get('/home', [JobBoardController::class, 'index'])->name('home');
 Route::resource("posts", PostController::class);
 Route::post('/search', [PostController::class, 'search'])->name('posts.search');
 Route::get('/search', [PostController::class, 'filter'])->name('posts.filter');
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::resource("posts", PostController::class);
-Route::middleware(['auth', 'role:employer,admin'])->group(function () {
+
+
+Route::middleware(['auth', 'role:employer,admin, candidate'])->group(function () {
     Route::resource('posts', PostController::class);
 });
 
