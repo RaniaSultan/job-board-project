@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="card-footer d-flex justify-content-start bg-light">
-                    @if(in_array(Auth::user()->type, ['employer']))
+                    <!-- @if(in_array(Auth::user()->type, ['employer']))
                         <a class="btn btn-outline-primary me-2" href="{{ route('posts.edit', $post['id']) }}">Edit</a>
                     @endif
                     @if($post['status'] == 'approved')
@@ -43,10 +43,34 @@
                         <button type="button" class="btn btn-outline-danger me-2" data-toggle="modal" data-target="#idModal{{$post->id}}">
                         Delete
                     </button>
-                    <!-- Modal -->
                     <div class="modal fade" id="idModal{{$post->id}}" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog" role="document"> -->
+                    @if($post['status'] == 'approved')
+                    <a class="btn btn-outline-success me-2" href="#">Applications</a>
+                    @elseif (in_array(Auth::user()->type, ['employer'])&&$post['status'] == 'approved')
+                    <a class="btn btn-outline-primary me-2" href="{{ route('posts.edit', $post['id']) }}">Edit</a>
+                    
+                    @elseif ($post['status'] == 'approved'&&((in_array(Auth::user()->type, ['admin'])) || (Auth::user()->type == 'employer')))
+                    <form id="delete-post-form-{{ $post->id }}" action="{{ route('posts.destroy', $post->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmModal-post-{{ $post->id }}">Delete</button>
+                    </form>
+
+                    @endif
+                    @if($post['status'] == 'pending')
+                                <div class="text-center text-warning">
+                                    This post is awaiting approval
+                                </div>
+                                @elseif($post['status'] == 'rejected')
+                                <div class="text-center text-danger">
+                                    This post has been rejected
+                                </div>
+                                @endif
+                    <!-- Delete Confirmation Modal -->
+                    <div class="modal fade" id="confirmModal-post-{{ $post->id }}" tabindex="-1">
+                        <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Delete Post</h5>
@@ -65,6 +89,7 @@
                                         <button type="button" class="btn btn-outline-danger"
                                             onclick="event.preventDefault(); document.getElementById('delete-form-{{$post->id}}').submit();">Delete</button>
                                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                                   
                                     </form>
                                 </div>
                             </div>
@@ -75,17 +100,20 @@
                     @endif
 
 
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Comments Section -->
-<div class="container mt-5">
-    <h3>Comments:</h3>
-    <!-- Add New Comment Section -->
-    @if(Auth::check())
+
+@if($post['status'] != 'pending' || $post['status'] != 'rejected')                            
+    <!-- Comments -->
+    <div class="container mt-5">
+        <h3>Comments:</h3>
+        <!-- Add New Comment Section -->
+        @if(Auth::check())
         <div class="card mt-4">
             <div class="card-body">
                 <form action="{{ route('comments.store') }}" method="POST">
@@ -93,6 +121,7 @@
                     <div class="mb-3">
                         <textarea class="form-control" name="content" rows="3" placeholder="Write your comment here..."
                             required></textarea>
+
                     </div>
                     <input type="hidden" name="post_id" value="{{ $post->id }}">
                     <button type="submit" class="btn btn-outline-primary">
@@ -104,32 +133,86 @@
         </div>
     @endif
 
-    @foreach ($post->comments as $comment)
-        <div class="card comment-box mb-3" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <strong>{{ $comment->user->name }}</strong>
-                <small class="comment-time">{{ $comment->created_at->format('M d, Y h:i A') }}</small>
-            </div>
 
-            <div class="card-body">
-                <p class="card-text">{{ $comment->content }}</p>
+        <!-- Display Comments -->
+        @foreach ($post->comments as $comment)
+            <div class="card comment-box mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <strong>{{ $comment->user->name }}</strong>
+                    <small class="comment-time">{{ $comment->created_at->format('M d, Y h:i A') }}</small>
+                </div>
 
-                @if (Auth::check() && (Auth::user()->id == $comment->user_id || Auth::user()->type == 'admin'))
-                    <form id="delete-form-{{ $comment->id }}" action="{{ route('comments.destroy', $comment->id) }}"
-                        method="POST" style="display:inline;">
+                <div class="card-body">
+                    <p class="card-text">{{ $comment->content }}</p>
+
+
+                    @if (Auth::check() && (Auth::user()->id == $comment->user_id || Auth::user()->type == 'admin'))
+                        <!-- Delete Button -->
+                        <form id="delete-comment-form-{{ $comment->id }}" action="{{ route('comments.destroy', $comment->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-outline-danger" id="confirm-delete-btn"
-                            data-form-id="delete-form-{{ $comment->id }}">Delete</button>
-                    </form>
-                @endif
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmModal-comment-{{ $comment->id }}">Delete</button>
+                        </form>
+
+                        <!-- Delete Confirmation Modal -->
+                        <div class="modal fade" id="confirmModal-comment-{{ $comment->id }}" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Confirm Deletion</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this comment?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form id="delete-comment-form-{{ $comment->id }}" action="{{ route('comments.destroy', $comment->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Edit Button -->
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editCommentModal-{{ $comment->id }}">Edit</button>
+
+                        <!-- Edit Comment Modal -->
+                        <div class="modal fade" id="editCommentModal-{{ $comment->id }}" tabindex="-1" aria-labelledby="editCommentModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editCommentModalLabel">Edit Comment</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{ route('comments.update', $comment->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="mb-3">
+                                                <textarea class="form-control" name="content" rows="3">{{ $comment->content }}</textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Update Comment</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
+@endif
 </div>
 
+@endsection
 
 <!-- End of the Blade Section -->
+
 
 <!-- JavaScript -->
 <script>
@@ -151,4 +234,4 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-@endsection
+
