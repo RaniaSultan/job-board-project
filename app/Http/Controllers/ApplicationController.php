@@ -72,9 +72,8 @@ class ApplicationController extends Controller
     // button applications in candidate profile page
     public function index(Request $request)
     {
-        $this->authorize('viewAny', Application::class); // Ensure the user can view any applications
         $status = $request->query('status', 'waiting'); // Get the 'status' query parameter, default to 'waiting'
-
+ 
         // Filter applications based on status
         $applications = Application::where('status', $status)->paginate(3);
 
