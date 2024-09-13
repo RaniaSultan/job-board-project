@@ -20,8 +20,8 @@ class ApplicationController extends Controller
      * Display a listing of the resource.
      */
 
-/**application in progress */
-     public function indexEmployerApp(Request $request, $postId = null)
+    /**application in progress */
+    public function indexEmployerApp(Request $request, $postId = null)
     {
         $this->authorize('viewAny', Application::class); // Ensure the user can view any applications
 
@@ -85,7 +85,7 @@ class ApplicationController extends Controller
         ]);
     }
 
-    
+
 
     /**
      * Display the specified resource.
@@ -101,7 +101,7 @@ class ApplicationController extends Controller
      * Accept candidate application.
      */
 
-     /**application in progress */
+    /**application in progress */
 
     public function acceptEmployerApp(Application $application, $postId = null)
     {
@@ -122,9 +122,9 @@ class ApplicationController extends Controller
      * Reject candidate application.
      */
 
-     /**application in progress */
+    /**application in progress */
 
-     public function rejectEmployerApp(Application $application, $postId = null)
+    public function rejectEmployerApp(Application $application, $postId = null)
     {
         $application->status = 'rejected';
         $application->save();
@@ -137,7 +137,7 @@ class ApplicationController extends Controller
      */
     public function downloadResume(Application $application)
     {
-    $file = public_path('resumes/' .$application['resume']);
+        $file = public_path('resumes/' . $application['resume']);
         return response()->download($file);
     }
 
@@ -157,36 +157,42 @@ class ApplicationController extends Controller
      */
     public function create()
     {
+    }
+
+    public function createApp($postId)
+    {
         // $user = Auth::user()->where('type', 'Candidate');
         $user = User::where('user_id', auth::id())->where('type', 'Candidate');
-        return view('applications.create', compact('user'));
+        return view('applications.create', ['user' => $user, 'postId' => $postId]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Application $application, $postId)
+    public function store(Request $request)
     {
         // check that candidate have not applied for this job post before
         $application = Application::where('user_id', auth::id())->where('post_id', $postId);
         if ($application) {
-            return to_route('posts.show', $application)->with('status', 'Application Exists Already!');
+            return to_route('home', $application)->with('status', 'Application Exists Already!');
         }
+        $postId = $request->input('postId');
         $resume_path = '';
         $data = request()->all();
+        dd($data);
         if (request()->hasFile('pdf')) {
             $resume = request()->file('pdf');
             $resume_path = $resume->store('resumes', 'applicants_resumes');
         }
         $data['resume'] = $resume_path;
         $data['user_id'] = auth::id();
-        $data['post_id'] = $postId; //post_id shall be available when merging with jobPost part
+        $data['post_id'] = $data-> postId; 
         $application = Application::create($data);
-        return to_route('posts.show', $application)->with('status', 'Application Done!');
+        return to_route('posts.showForEveryOne')->with('status', 'Application Done!');
     }
 
 
-     /*Cancel candidate application.
+    /*Cancel candidate application.
      */
     public function cancel(Application $application)
     {

@@ -94,7 +94,7 @@
                                     <option selected>Choose Your Type</option>
                                     <option value="employer">Employer</option>
                                     <option value="candidate">Candidate</option>
-                                    <!-- <option value="admin">Admin</option> -->
+                                    <option value="admin">Admin</option>
                                 </select>
                             </div>
                         </div>

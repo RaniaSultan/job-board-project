@@ -24,8 +24,8 @@ class CommentController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        return view('comments.create', compact('user'));
+        // $user = Auth::user();
+        // return view('comments.create', compact('user'));
 
     }
 
@@ -74,10 +74,22 @@ class CommentController extends Controller
      * Update the specified resource in storage.
      */
 
-    public function update(Request $request, string $id)
-
+    public function update(Request $request, Comment $comment)
     {
-        //
+        // تحقق أن المستخدم الذي يحاول التعديل هو من أنشأ التعليق أو أنه Admin
+        if (auth()->user()->id !== $comment->user_id && auth()->user()->type !== 'admin') {
+            return redirect()->back()->with('error', 'You are not authorized to edit this comment.');
+        }
+
+        
+        $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $comment->content = $request->input('content');
+        $comment->save();
+
+        return redirect()->back()->with('success', 'Comment updated successfully!');
     }
 
     /**
@@ -87,7 +99,7 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         $comment->delete();
-
-        return redirect()->route('posts.index')->with('success', 'Comment deleted successfully');
+        return redirect()->back()->with('success', 'Comment deleted successfully');
+       
     }
 }

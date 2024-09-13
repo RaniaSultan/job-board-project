@@ -28,7 +28,7 @@ Create Application
             <div class='alert alert-danger'>{{ $message }}</div>
         @enderror
     </div>
-
+    <input type="hidden" name="postId" value="{{$postId}}">
     <button type='submit' class='btn btn-outline-success mt-3'>Send Application</button>
 </form>
 @endsection

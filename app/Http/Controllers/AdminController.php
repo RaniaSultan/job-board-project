@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Post; 
+use Carbon\Carbon;
 class AdminController extends Controller
 {
     /**
@@ -61,4 +62,26 @@ class AdminController extends Controller
     {
         //
     }
+    public function pendingPosts()
+{
+    $pendingPosts = Post::where('status', 'pending')->get();
+    return view('admin.pending-posts', compact('pendingPosts'));
+}
+    public function approvePost($id)
+{
+    $post = Post::findOrFail($id);
+    $post->status = 'approved';
+    $post->save();
+
+    return redirect()->back()->with('success', 'Post approved successfully.');
+}
+
+public function rejectPost($id)
+{
+    $post = Post::findOrFail($id);
+    $post->status = 'rejected';
+    $post->save();
+
+    return redirect()->back()->with('success', 'Post rejected successfully.');
+}
 }
