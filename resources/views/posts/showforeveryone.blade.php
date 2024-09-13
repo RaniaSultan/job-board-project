@@ -44,14 +44,14 @@
                                 <a class="btn btn-outline-success me-2" href="{{ route('applications.createApp', $post->id) }}">Apply</a>
                             @endif
                             @if(Auth::user()->type == 'employer' && Auth::user()->id == $post->user_id)
-                                <a class="btn btn-outline-success me-2" href="{{route('applications.indexEmployerApp')}}">Applications</a>
+                                <a class="btn btn-outline-success me-2" href="{{route('applications.indexEmployerApp', $post->id)}}">Applications</a>
                                 <a class="btn btn-outline-primary me-2" href="{{ route('posts.edit', $post->id) }}">Edit</a>
                             @endif
                             @if(Auth::user()->type == 'admin' || (Auth::user()->type == 'employer' && Auth::user()->id == $post->user_id))
                                 <form id="delete-post-form-{{ $post->id }}" action="{{ route('posts.destroy', $post->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmModal-post-{{ $post->id }}">Delete</button>
+                                    <button type="button" class="btn btn-outline-danger me-2" data-bs-toggle="modal" data-bs-target="#confirmModal-post-{{ $post->id }}">Delete</button>
                                 </form>
                             @endif
                         @endif

@@ -1,7 +1,9 @@
+<?php
+use Carbon\Carbon;
+?>
+
+ 
 @extends('layouts.app')
-
-
-
 @section('main')
 @if(session('success'))
   <div class="alert alert-success">{{ session("success") }}</div>
@@ -65,18 +67,32 @@
   <div class="col-md-9">
     <div id="posts">
       <!-- Example Post -->
-      @foreach ($posts as $post)
-
-      <div class="card mb-3">
-      <h5 class="card-header">{{$post->category}} <span class="fst-italic">{{$post->workType}}</span></h5>
-      <div class="card-body">
-        <h5 class="card-title">{{$post->title}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{$post->location}}</h6>
-        <p class="card-text">{{$post->description}}</p>
-        <a href="#" class="card-link">Read more</a>
-      </div>
-      </div>
-    @endforeach
+      @foreach($posts as $post)
+        <div class="container mt-5">
+            <div class="card mb-4">
+                <img src="{{ asset('images/posts/' . $post->logo) }}" class="card-img-side" alt="Post Image" style="border-radius: 50%;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <h3 class="card-title mb-0">{{ $post->title }}</h3>
+                        <h5 class="card-subtitle mb-0 text-muted ms-2">
+                            <i><small>{{ $post->workType }}</small></i>
+                        </h5>
+                    </div>
+                    <h5 class="card-subtitle mb-2 text-muted">
+                        <small>{{ $post->location }}</small>
+                    </h5>
+                    <p class="card-text">{{ $post->description }}</p>
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="{{ route('posts.showForEveryOne', $post->id) }}" class="btn btn-outline-primary">Read More</a>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    
+                    Posted on {{ Carbon::parse($post->updated_at)->format('d M Y, h:i A') }}, by {{ $post->user->name }}
+                </div>
+            </div>
+        </div>
+        @endforeach
       <!-- Repeat above card block for each post -->
     </div>
   </div>

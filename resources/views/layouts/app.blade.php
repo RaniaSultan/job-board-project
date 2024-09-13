@@ -158,7 +158,7 @@
 
                             @endif
                             @if (Auth::user()->type === 'candidate')
-                                <li class="nav-item"><a class="nav-link" href="/home">Profile</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{route('profile.index')}}">Profile</a></li>
                             @endif
                         @endauth
                     </ul>
@@ -197,6 +197,7 @@
                 </div>
             </div>
         </nav>
+        @yield('sub-navbar')
 
         <main class="py-4">
             @if (session('error'))
