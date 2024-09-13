@@ -24,8 +24,8 @@ class CommentController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        return view('comments.create', compact('user'));
+        // $user = Auth::user();
+        // return view('comments.create', compact('user'));
 
     }
 
