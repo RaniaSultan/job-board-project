@@ -14,12 +14,9 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
 
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('post_id');
+            $table->unsignedBigInteger(column: 'user_id');
             $table->text('content');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade');
-            // $table->primary(['user_id', 'post_id']);
             $table->integer('commentable_id')->unsigned(); 
             $table->string('commentable_type');
             $table->timestamps();

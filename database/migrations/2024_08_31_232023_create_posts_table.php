@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('benefites')->nullable();
             $table->string('logo')->nullable();
             $table->string('category')->nullable();
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', allowed: ['pending', 'approved', 'rejected'])->default('pending');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
