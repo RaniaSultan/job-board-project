@@ -69,6 +69,8 @@ class ApplicationController extends Controller
             return redirect()->route('posts.index')->with('error', 'Post ID is required to view applications.');
         }
     }
+
+    // button applications in candidate profile page
     public function index(Request $request)
     {
         $this->authorize('viewAny', Application::class); // Ensure the user can view any applications
