@@ -5,6 +5,17 @@
 
 @extends('layouts.app')
 @section('content')
+@if (session('error'))
+<div class="alert alert-danger" id="flash-message">
+    {{ session('error') }}
+</div>
+@endif
+
+@if (session('status'))
+<div class="alert alert-success" id="flash-message">
+    {{ session('status') }}
+</div>
+@endif
 <div class="container">
     @if ($posts->count() > 0)
         @foreach($posts as $post)
