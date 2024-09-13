@@ -68,8 +68,8 @@ Route::put('/profile', [ProfileController::class, 'update'])->name('profile.upda
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 Route::post('applications/{application}/cancel', [ApplicationController::class, 'cancel'])->name('applications.cancel');
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
-Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+// Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+// Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 Route::middleware(['auth', 'admin'])->group(function() {
     Route::get('/admin/pending-posts', [AdminController::class, 'pendingPosts'])->name('admin.pending-posts');
