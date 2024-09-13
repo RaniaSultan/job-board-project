@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\PostTitleDoesNotContainPost;
+use App\Rules\PostDescriptionDoesNotContainDescription;
 
 class UpdatePostRequest extends FormRequest
 {
@@ -22,8 +24,8 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => 'required|min:30',
+            'title' => ['required', 'string', 'max:255', new PostTitleDoesNotContainPost()],
+            'description' => ['required', 'min:30', new PostDescriptionDoesNotContainDescription()],
             'deadline' => 'required|date|after:today',
             'workType' => 'required',
             'location' => 'required',

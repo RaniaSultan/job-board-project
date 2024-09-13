@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
-
-use Illuminate\Http\Request;
-use App\Models\Comment;  // استدعاء الـ Model
 use App\Models\Post;
+use App\Models\Comment;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class CommentController extends Controller
 {
@@ -15,9 +14,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-
         $comments = Comment::paginate(3);
         return view('posts.show', compact('comments'));    /////
+
     }
 
     /**
@@ -25,14 +24,15 @@ class CommentController extends Controller
      */
     public function create()
     {
-
         $user = Auth::user();
         return view('comments.create', compact('user'));
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -53,6 +53,7 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      */
+
     public function show(string $id)
 
     {
@@ -62,6 +63,7 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
     public function edit(string $id)
 
     {
@@ -71,6 +73,7 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, string $id)
 
     {
@@ -80,7 +83,8 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comment $comment)  
+
+    public function destroy(Comment $comment)
     {
         $comment->delete();
 

@@ -41,11 +41,12 @@ class ApplicationPolicy
     public function update(User $user, Application $application): bool
     {
         if ($user->id === $application->user_id) {
-            return true; 
+            return true;
         }
 
-        return false; // 
+        return false; //
     }
+
     /**
      * Determine whether the user can delete the model.
      */

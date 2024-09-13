@@ -1,16 +1,71 @@
 @extends('layouts.app')
 
-@section('content')
+@section('navbar')
+<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <li class="nav-item active">
+        <a class="nav-link" href="#raina">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/posts/create">Create Post</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'approved']) }}">Approved Posts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'pending']) }}">Posts pending</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('posts.index', ['status' => 'rejected']) }}">Rejected Posts </a>
+    </li>
+</ul>
+@endsection
 
-<h1>Create New Post</h1>
+@section('main')
 
-<form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+<h1 style="text-align: center;">
+    Create New Post
+</h1>
+
+<style>
+.form-background {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.form-background label {
+    font-family: 'Lora', serif;
+    font-weight: bold;
+}
+
+.form-background .form-control {
+    font-family: 'Roboto', sans-serif;
+}
+
+.form-background .form-check-label {
+    font-family: 'Lora', serif;
+}
+
+.form-background .alert {
+    font-family: 'Roboto', sans-serif;
+}
+
+.form-background button {
+    font-family: 'Roboto', sans-serif;
+}
+</style>
+
+<form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" style="width: 70%;"
+    class="m-auto form-background">
     @csrf
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" name="title" id="title" class="form-control" placeholder="Enter job title" required>
+                <input type="text" name="title" id="title" class="form-control" placeholder="Enter job title"
+                    value="{{ old('title') }}" required>
                 @error('title')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -20,7 +75,7 @@
             <div class="form-group">
                 <label for="category">Category</label>
                 <input type="text" name="category" id="category" class="form-control" placeholder="Enter job category"
-                    required>
+                    value="{{ old('category') }}" required>
                 @error('category')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -41,7 +96,8 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="skills">Skills</label>
-                <input type="text" name="skills" id="skills" class="form-control" placeholder="Enter required skills">
+                <input type="text" name="skills" id="skills" class="form-control" value="{{ old('skills') }}"
+                    placeholder="Enter required skills">
                 @error('skills')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -51,7 +107,7 @@
             <div class="form-group">
                 <label for="salaryRange">Salary Range</label>
                 <input type="text" name="salaryRange" id="salaryRange" class="form-control"
-                    placeholder="Enter salary range" required>
+                    value="{{ old('salaryRange') }}" placeholder="Enter salary range" required>
                 @error('salaryRange')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -70,6 +126,7 @@
 
     <div class="form-group">
         <label for="location">Location</label>
+
         <input type="text" name="location" id="location" class="form-control" placeholder="Enter job location"
             value="{{ old('location') }}" required>
         @error('location')
@@ -89,24 +146,27 @@
         <label>Work Type</label><br>
 
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="workType" id="remote" value="remote" required>
+            <input class="form-check-input" type="radio" name="workType" id="remote" value="remote"
+                {{ old('workType', $post['workType']) == 'remote' ? 'checked' : '' }} required>
             <label class="form-check-label" for="remote">Remote</label>
         </div>
 
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="workType" id="onsite" value="onsite" required>
+            <input class="form-check-input" type="radio" name="workType" id="onsite" value="onsite"
+                {{ old('workType', $post['workType']) == 'onsite' ? 'checked' : '' }} required>
             <label class="form-check-label" for="onsite">Onsite</label>
         </div>
 
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="workType" id="hybrid" value="hybrid" required>
+            <input class="form-check-input" type="radio" name="workType" id="hybrid" value="hybrid"
+                {{ old('workType', $post['workType']) == 'hybrid' ? 'checked' : '' }} required>
             <label class="form-check-label" for="hybrid">Hybrid</label>
         </div>
     </div><br>
 
     <div class="form-group">
         <label for="logo">Logo</label>
-        <input type="file" name="logo" id="logo" class="form-control">
+        <input type="file" name="logo" id="logo" value="{{ old('logo') }}" class="form-control">
         @error('logo')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
