@@ -24,9 +24,7 @@ class ApplicationController extends Controller
     public function indexEmployerApp(Request $request, $postId = null)
     {
         $this->authorize('viewAny', Application::class); // Ensure the user can view any applications
-
         $status = $request->query('status'); // Get the 'status' query parameter
-
         if ($postId) {
             // Fetch the post to ensure it exists
             $post = Post::findOrFail($postId);
@@ -85,8 +83,6 @@ class ApplicationController extends Controller
         ]);
     }
 
-
-
     /**
      * Display the specified resource.
      */
@@ -98,38 +94,23 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Accept candidate application.
+     * Accept candidate application
      */
-
-    /**application in progress */
-
-    public function acceptEmployerApp(Application $application, $postId = null)
-    {
-        $application->status = 'accepted';
-        $application->save();
-
-        return to_route('applications.indexEmployer', $postId)->with('status', 'Application accepted!');
-    }
     public function accept(Application $application)
     {
-        $this->authorize('update', $application); // Ensure the user can update the application
         $application->status = 'accepted';
         $application->save();
-        return redirect()->route('applications.index')->with('status', 'Application accepted!');
+        return redirect()->route('applications.indexEmployerApp')->with('status', 'Application accepted!');
     }
 
     /**
-     * Reject candidate application.
+     * Reject candidate application
      */
-
-    /**application in progress */
-
-    public function rejectEmployerApp(Application $application, $postId = null)
+    public function reject(Application $application)
     {
         $application->status = 'rejected';
         $application->save();
-
-        return to_route('applications.indexEmployer', $postId)->with('status', 'Application rejected!');
+        return redirect()->route('applications.indexEmployerApp')->with('status', 'Application rejected!');
     }
 
     /**
@@ -139,17 +120,6 @@ class ApplicationController extends Controller
     {
         $file = public_path('resumes/' . $application['resume']);
         return response()->download($file);
-    }
-
-    //{{--asset('resumes/applications/' . $post['resume'])--}}
-
-
-    public function reject(Application $application)
-    {
-        $this->authorize('update', $application); // Ensure the user can update the application
-        $application->status = 'rejected';
-        $application->save();
-        return redirect()->route('applications.index')->with('status', 'Application rejected!');
     }
 
     /**
@@ -171,7 +141,6 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
-
         $postId = $request->input('postId');
         $exists = Application::where('user_id', auth::id())
             ->where('post_id', $postId)
@@ -182,7 +151,7 @@ class ApplicationController extends Controller
         }
         $resume_path = '';
         $data = request()->all();
-        
+
         if (request()->hasFile('pdf')) {
             $resume = request()->file('pdf');
             $resume_path = $resume->store('resumes', 'applicants_resumes');
@@ -198,7 +167,6 @@ class ApplicationController extends Controller
      */
     public function cancel(Application $application)
     {
-        $this->authorize('update', $application); // Ensure the user can update the application
         $application->status = 'cancelled';
         $application->save();
         return redirect()->route('applications.index')->with('status', 'Application cancelled!');

@@ -40,11 +40,7 @@ class ApplicationPolicy
      */
     public function update(User $user, Application $application): bool
     {
-        if ($user->id === $application->user_id) {
-            return true;
-        }
-
-        return false; //
+    
     }
 
     /**
