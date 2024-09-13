@@ -37,6 +37,8 @@ Route::get('/home', [App\Http\Controllers\JobBoardController::class, 'index'])->
 Route::middleware(['auth', 'role:employer,admin'])->group(function () {
     Route::resource('posts', PostController::class);
 });
+
+Route::get('/posts/showOnePost/{id}', [PostController::class, 'showForEveryOne'])->name('posts.showForEveryOne');
 Route::post('/search', [PostController::class, 'search'])->name('posts.search');
 
 
