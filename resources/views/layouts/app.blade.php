@@ -10,9 +10,9 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-
-<style>
-.alert {
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <style>
+        .alert {
             margin-top: 20px;
             text-align: center;
             font-weight: bold;

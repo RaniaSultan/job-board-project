@@ -1,11 +1,11 @@
 <?php
 use App\Http\Controllers\JobBoardController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CommentController;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
@@ -39,6 +39,12 @@ Route::get('/search', [PostController::class, 'filter'])->name('posts.filter');
 // Route::resource("posts", PostController::class);
 
 Route::resource("comments", CommentController::class);
+Route::resource("posts", PostController::class);
+
+Route::post('/search', [PostController::class, 'search'])->name('posts.search');
+
+
+
 Route::get('/home', [App\Http\Controllers\JobBoardController::class, 'index'])->name('home');
 Route::middleware(['auth', 'role:employer,admin'])->group(function () {
     Route::resource('posts', PostController::class);

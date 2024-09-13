@@ -17,7 +17,7 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'deadline' => $this->faker->dateTimeBetween('now', '+1 year'),

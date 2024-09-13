@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace App\Http\Controllers;
 use App\Models\Application;
 use App\Models\Post;
@@ -88,7 +90,7 @@ class ApplicationController extends Controller
 
     public function show(Application $application)
     {
-        
+
     }
 
     /**
@@ -166,10 +168,19 @@ class ApplicationController extends Controller
 
     /*Cancel candidate application.
      */
-    public function cancel(Application $application)
+    public function cancelcand(Application $application)
     {
+        if ($application->user_id !== Auth::id()) {
+            return redirect()->back()->withErrors('Unauthorized action.');
+        }
+
         $application->status = 'cancelled';
         $application->save();
-        return redirect()->route('applications.index')->with('status', 'Application cancelled!');
+
+        return redirect()->route('profile.index', ['status' => 'waiting'])
+            ->with('success', 'Application cancelled successfully.');
     }
+
+
+
 }
