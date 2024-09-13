@@ -192,9 +192,7 @@ class ApplicationController extends Controller
         $data['post_id'] = $postId;
         $application = Application::create($data);
         return to_route('posts.showForEveryOne', $postId)->with('status', 'Application Done!');
-
     }
-
 
     /*Cancel candidate application.
      */

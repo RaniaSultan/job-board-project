@@ -44,7 +44,7 @@
                                 <a class="btn btn-outline-success me-2" href="{{ route('applications.createApp', $post->id) }}">Apply</a>
                             @endif
                             @if(Auth::user()->type == 'employer' && Auth::user()->id == $post->user_id)
-                                <a class="btn btn-outline-success me-2" href="">Applications</a>
+                                <a class="btn btn-outline-success me-2" href="{{route('applications.indexEmployer')}}">Applications</a>
                                 <a class="btn btn-outline-primary me-2" href="{{ route('posts.edit', $post->id) }}">Edit</a>
                             @endif
                             @if(Auth::user()->type == 'admin' || (Auth::user()->type == 'employer' && Auth::user()->id == $post->user_id))
