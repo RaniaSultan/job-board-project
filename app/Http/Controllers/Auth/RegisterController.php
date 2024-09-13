@@ -53,7 +53,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'size:11', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'type' => 'required'
+            'type' => 'required|in:admin,employer,candidate',
         ]);
     }
 
@@ -64,7 +64,7 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
+    { 
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

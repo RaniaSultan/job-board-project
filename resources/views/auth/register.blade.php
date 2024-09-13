@@ -94,8 +94,13 @@
                                     <option selected>Choose Your Type</option>
                                     <option value="employer">Employer</option>
                                     <option value="candidate">Candidate</option>
-                                    <option value="admin">Admin</option>
+                                    <!-- <option value="admin">Admin</option> -->
                                 </select>
+                                @error('type')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
 
