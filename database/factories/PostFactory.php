@@ -17,7 +17,7 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'deadline' => $this->faker->dateTimeBetween('now', '+1 year'),
@@ -32,8 +32,4 @@ class PostFactory extends Factory
             'user_id' => \App\Models\User::factory(),
         ];
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 6fe561d (profile & application)

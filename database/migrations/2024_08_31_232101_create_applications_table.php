@@ -12,21 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('applications', function (Blueprint $table) {
-<<<<<<< HEAD
-=======
             $table->id();
->>>>>>> 6fe561d (profile & application)
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('post_id');
             $table->string('resume')->nullable();
             $table->enum('status', ['waiting', 'accepted', 'rejected', 'cancelled'])->default('waiting');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade');
-<<<<<<< HEAD
             $table->primary(['user_id', 'post_id']);
-=======
             // $table->primary(['user_id', 'post_id']);
->>>>>>> 6fe561d (profile & application)
             $table->timestamps();
         });
     }
@@ -38,8 +32,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('applications');
     }
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 6fe561d (profile & application)
+

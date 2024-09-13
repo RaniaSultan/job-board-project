@@ -71,4 +71,22 @@ class ApplicationController extends Controller
         $application->save();
         return redirect()->route('applications.index')->with('status', 'Application cancelled!');
     }
+
+
+    public function cancelcand(Application $application)
+    {
+        // تحقق من أن التطبيق يعود للمستخدم الحالي
+        if ($application->user_id !== Auth::id()) {
+            return redirect()->back()->withErrors('Unauthorized action.');
+        }
+    
+        // تحديث حالة التطبيق إلى "cancelled"
+        $application->status = 'cancelled';
+        $application->save();
+    
+        // إعادة التوجيه إلى نفس الصفحة مع رسالة النجاح
+        return redirect()->route('profile.index', ['status' => 'waiting'])
+                         ->with('success', 'Application cancelled successfully.');
+    }
+    
 }

@@ -12,12 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-<<<<<<< HEAD
 
         $this->call(PostSeeder::class);
 
-=======
->>>>>>> 6fe561d (profile & application)
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
@@ -25,8 +22,5 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 6fe561d (profile & application)
+

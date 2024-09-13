@@ -19,10 +19,9 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->enum('type', ['admin', 'employer', 'candidate']);
-<<<<<<< HEAD
-=======
+
             $table->string('image')->nullable();
->>>>>>> 6fe561d (profile & application)
+
             $table->timestamps();
         });
     }

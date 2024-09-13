@@ -1,11 +1,11 @@
 <?php
 use App\Http\Controllers\JobBoardController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ApplicationController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,21 +23,25 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::get('/home', [JobBoardController::class, 'index'])->name('home');
+
 Route::resource("comments", CommentController::class);
-Route::get('/home', [App\Http\Controllers\JobBoardController::class, 'index'])->name('home');
 Route::resource("posts", PostController::class);
+
 Route::post('/search', [PostController::class, 'search'])->name('posts.search');
-// jobboard.show
-// Route::get('/posts/{id}', [JobBoardController::class, 'show'])->name('jobboard.show');
 
-Route::resource('applications', (ApplicationController::class));
-Route::get('/profile', [ProfileController::class, 'show'])->name('profile')->middleware('auth');
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
-// applications acceptence and rejection routes
+Route::resource('applications', ApplicationController::class);
 
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 Route::post('applications/{application}/accept', [ApplicationController::class, 'accept'])->name('applications.accept');
 Route::post('applications/{application}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
 Route::post('applications/{application}/cancel', [ApplicationController::class, 'cancel'])->name('applications.cancel');
 
+Route::middleware('auth')->group(function() {
+    
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile.index');
 
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
