@@ -109,7 +109,7 @@ class ApplicationController extends Controller
         $application->save();
 
         return to_route('applications.indexEmployer', $postId)->with('status', 'Application accepted!');
-    }
+    } 
     public function accept(Application $application)
     {
         $this->authorize('update', $application); // Ensure the user can update the application
