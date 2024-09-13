@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Auth;
-=======
->>>>>>> faa3d43b2db9087416a77c6083abb83b07f40c58
 
 class JobBoardController extends Controller
 {
